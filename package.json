@@ -1,5 +1,5 @@
 {
-  "name": "OpenShift-Sample-App",
+  "name": "Kevin-Kotosky-Setup-app",
   "version": "1.0.0",
   "description": "OpenShift Sample Application",
   "keywords": [
@@ -9,27 +9,24 @@
     "openshift"
   ],
   "author": {
-    "name": "OpenShift",
-    "email": "ramr@example.org",
-    "url": "http://www.openshift.com/"
+    "name": "Kevin Kotosky",
+    "email": "kotosky.k@husky.neu.edu",
+    "url": ""
   },
-  "homepage": "http://www.openshift.com/",
+  "homepage": "localhost:3000",
   "repository": {
     "type": "git",
-    "url": "https://github.com/openshift/origin-server"
+    "url": "https://github.com/kkotosky/webdev"
   },
-
   "engines": {
     "node": ">= 0.6.0",
     "npm": ">= 1.0.0"
   },
-
   "dependencies": {
-    "express": "~3.4.4"
+    "express": "^3.4.8"
   },
   "devDependencies": {},
   "bundleDependencies": [],
-
   "private": true,
   "main": "server.js"
 }
