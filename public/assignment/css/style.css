@@ -1,3 +1,9 @@
 .full_width {
     width:100%;
 }
+table .glyphicon{
+    font-size:150%;
+}
+.right-spacing {
+    margin-right: 12px;
+}
