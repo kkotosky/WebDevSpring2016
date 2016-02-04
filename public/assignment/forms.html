@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <!-- Bootstrap core CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./css/dashboard.css" rel="stylesheet">
+    <link href="./css/style.css" rel="stylesheet">
+</head>
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Form Maker</a>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="/assignment/register.html">Register</a></li>
+                <li><a href="/assignment/login.html">Login</a></li>
+                <li><a href="#">Username</a></li>
+                <li><a href="#">Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li><a href="/assignment/home.html">Home<span class="sr-only">(current)</span></a></li>
+                <li><a href="/assignment/profile.html">Profile</a></li>
+                <li><a href="/assignment/admin.html">Admin</a></li>
+                <li class="active"><a href="/assignment/forms.html">Forms</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Forms</h1>
+            <ul class="nav nav-tabs">
+                <li class="active"><a>Forms</a></li>
+                <li><a href="/assignment/form-fields.html">Fields</a></li>
+            </ul>
+            <div class="row ">
+                <form class="form-horizontal">
+                    <table class="table table-hover table-striped table-border">
+                        <tr>
+                            <th><span>Forms</span></th>
+                            <th><span>Fields</span></th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="Username"></td>
+                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-ok"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Registration Form</span></td>
+                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>Contact List</span></td>
+                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
+                        </tr>
+                        <tr>
+                            <td><span>To Do List</span></td>
+                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+</body>
+</html>
