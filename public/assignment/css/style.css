@@ -7,3 +7,21 @@ table .glyphicon{
 .right-spacing {
     margin-right: 12px;
 }
+.lower {
+    margin-top: 15px;
+}
+.text-left {
+    text-align: left;
+}
+.high-width {
+    width:70%;
+}
+.inline {
+    display: inline;
+}
+.border-top {
+    border-top: 1px solid black;
+}
+.glyphicon{
+    cursor: pointer;
+}
