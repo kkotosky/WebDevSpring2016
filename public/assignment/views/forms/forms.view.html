@@ -1,0 +1,32 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Forms</h1>
+            <ul class="nav nav-tabs">
+                <li class="active"><a>Forms</a></li>
+                <li><a href="/assignment/form-fields.html">Fields</a></li>
+            </ul>
+            <div class="row ">
+                <form class="form-horizontal">
+                    <table class="table table-hover table-striped table-border">
+                        <tr>
+                            <th><span>Forms</span></th>
+                            <th><span>Fields</span></th>
+                        </tr>
+                        <tr>
+                            <td><input type="text" placeholder="name" ng-model="nform.name"></td>
+                            <td><span class="glyphicon glyphicon-plus right-spacing" ng-click="addForm(nform)"></span>
+                                <span class="glyphicon glyphicon-ok" ng-click="updateForm(nform)"></span></td>
+                        </tr>
+                        <tr ng-repeat="form in forms">
+                            <td><span>{{form.title}}</span></td>
+                            <td><span class="glyphicon glyphicon-remove right-spacing" ng-click="deleteForm(form)"></span>
+                                <span class="glyphicon glyphicon-pencil" ng-click="updateForm(form)"></span></td>
+                        </tr>
+                    </table>
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>
