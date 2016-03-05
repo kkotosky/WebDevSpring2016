@@ -1,0 +1,23 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-offset-1 col-md-10 main">
+            <h1 class="page-header">Popular Quizzes</h1>
+            <div class="row">
+                <h2>Search results for {{searchVal.text}} </h2>
+                <input type="text" ng-model="pageSearch.text">
+                <button ng-click="makeNewSearch(pageSearch.text)">Search!</button>
+            </div>
+            <div class="row ">
+                <table class="list_quizzes">
+                    <tr ng-repeat="quiz in validQuizzes">
+                        <td class="pointer" ng-click="takeQuiz(quiz)">
+                            <span>{{$index + 1}})</span>
+                            <span>{{quiz.title}}</span><br>
+                            <span class="quiz_description">{{quiz.description}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

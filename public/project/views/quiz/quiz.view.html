@@ -1,0 +1,26 @@
+<div class="container-fluid col-sm-offset-1">
+    <div class="row">
+        <h2 class="pull-right">Time Remaining 13:00</h2>
+        <h2> {{quiz.title}} </h2>
+    </div>
+    <div class="row" ng-if="quiz.multi">
+        <h3> {{quiz.question}} </h3>
+    </div>
+    <div class="row">
+        <input type="text" placeholder="Type answers here..." ng-model="input.answer">
+    </div>
+    <div ng-repeat="i in getArray(numRows) track by $index">
+        <div class ="row">
+            <div ng-repeat="j in getArray(numCols) track by $index">
+                <div class="{{classes.rows}} main">
+                    <span ng-if="quiz.headers[($index*$parent.$index)] !== null">
+                        {{quiz.headers[($index*$parent.$index)]}}
+                    </span>
+                    <div ng-repeat="answer in getSection($index, $parent.$index)">
+                        <span class="answer_loc">{{answer}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,41 @@
+<div class="container-fluid" ng-controller="RegisterController">
+    <div class="row">
+        <div class="col-md-4 main">
+            <h2>Tests Taken</h2><br>
+            <span class="stat_span"> 45 </span>
+        </div>
+        <div class="col-md-4 main">
+            <h2>Average Score</h2><br>
+            <span class="stat_span">75.6%</span>
+        </div>
+        <div class="col-md-4 main">
+            <h2>Last Played Date</h2><br>
+            <span class="stat_span">5/1/16</span>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6 main">
+            <h2>Your Quizzes</h2><br>
+            <table class="list_quizzes">
+                <tr ng-repeat="quiz in userQuizzes">
+                    <td>
+                        <span class="glyphicon glyphicon-pencil pull-right" ng-click="editQuiz(nform)"></span>
+                        <span>{{quiz.title}}</span><br>
+                        <span class="quiz_description">{{quiz.description}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-6 main">
+            <h2>Prior Quizzes</h2><br>
+            <table class="list_quizzes">
+                <tr ng-repeat="quiz in priorQuizzes">
+                    <td>
+                        <span>{{quiz.title}}</span><br>
+                        <span class="quiz_description">{{quiz.description}}</span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>

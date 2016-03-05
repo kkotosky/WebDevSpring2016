@@ -1,0 +1,18 @@
+<div>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <a class="navbar-brand" href="#/">Kevin's Sporcle Thingy!</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><input ng-model="search.text" type="text" placeholder="Search..."></li>
+                    <li><a ng-if="search.text" href="#/search?search={{search.text}}">Go!</a></li>
+                    <li><a href="#/home">Home</a></li>
+                    <li ng-if="login"><a href="#/profile">Profile/Stats</a></li>
+                    <li><a href="#/register">Login/Register</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</div>

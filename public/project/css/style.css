@@ -1,0 +1,68 @@
+.full_width {
+    width:100%;
+}
+table .glyphicon{
+    font-size:150%;
+}
+.right-spacing {
+    margin-right: 12px;
+}
+.lower {
+    margin-top: 15px;
+}
+.text-left {
+    text-align: left;
+}
+.high-width {
+    width:70%;
+}
+.inline {
+    display: inline;
+}
+.border-top {
+    border-top: 1px solid black;
+}
+.glyphicon{
+    cursor: pointer;
+}
+.pointer {
+    cursor: pointer;
+}
+.view_container{
+    padding-top: 25px;
+}
+.list_quizzes {
+    font-size: 22px;
+    border-collapse: separate;
+    border-spacing: 25px;
+}
+.nav input{
+    margin-top: 13px;
+}
+.list_quizzes td{
+    height: 50px;
+    background-color: tan;
+    border: 1px black solid;
+    width: 600px;
+    line-height:1;
+    padding: 10px 10px 10px 22px;
+}
+.list_quizzes .glyphicon {
+    font-size: 75%;
+}
+.quiz_description {
+    font-size:10px;
+    padding-left: 44px;
+}
+.stat_span {
+    font-size: 36px;
+    padding-left: 55px;
+}
+.answer_loc {
+    background-color: tan;
+    border: 1px black solid;
+    font-size: 18px;
+    padding:4px;
+    margin-bottom: 6px;
+    line-height:2.5;
+}

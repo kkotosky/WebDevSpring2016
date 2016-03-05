@@ -1,0 +1,33 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-offset-1 col-md-6 main">
+            <h1 class="page-header">Popular Quizzes</h1>
+            <div class="row ">
+                <table class="list_quizzes">
+                    <tr ng-repeat="quiz in popQuizzes">
+                        <td class="pointer" ng-click="takeQuiz(quiz)">
+                            <span>{{$index + 1}})</span>
+                            <span>{{quiz.title}}</span><br>
+                            <span class="quiz_description">{{quiz.description}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="col-md-5 main">
+            <h1 class="page-header">Your Quizzes</h1>
+            <div class="row ">
+                <table class="list_quizzes">
+                    <tr ng-repeat="quiz in userQuizzes">
+                        <td class="pointer" ng-click="takeQuiz(quiz)">
+                            <span class="glyphicon glyphicon-pencil pull-right" ng-click="editQuiz(quiz)"></span>
+                            <span>{{quiz.title}}</span><br>
+                            <span class="quiz_description">{{quiz.description}}</span>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
