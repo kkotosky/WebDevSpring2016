@@ -7,9 +7,10 @@
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#/register">Register</a></li>
-                    <li><a href="#/login">Login</a></li>
-                    <li><a href="#/profile">Profile</a></li>
-                    <li><a href="#/admin">Admin</a></li>
+                    <li ng-if="!loggedIn"><a href="#/login">Login</a></li>
+                    <li ng-if="loggedIn"> <a href="#/home" ng-click="logout()">Logout</a></li>
+                    <li><a href="#/profile">{{user.username}}</a></li>
+                    <li ng-if="isAdmin"><a href="#/admin">Admin</a></li>
                 </ul>
             </div>
         </div>

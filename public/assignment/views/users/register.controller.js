@@ -16,6 +16,7 @@
                 if (user ) {
                     $location.url("/profile");
                     $rootScope.user = user;
+                    $rootScope.loggedIn = true;
                 } else {
                     $rootScope.alert = "Not able to register";
                 }

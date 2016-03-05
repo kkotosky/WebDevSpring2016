@@ -8,11 +8,12 @@
         $rootScope.login = login;
 
         function login (user) {
-            console.log(user);
             UserService.findUserByCredentials(user.username, user.password, function(userInfo){
-                if (userInfo) {
+                if (userInfo != null) {
                     $rootScope.user = userInfo;
                     $location.url("/profile");
+                    $rootScope.loggedIn = true;
+                    $rootScope.isAdmin = _.contains(userInfo.roles, 'admin');
                 } else {
                     console.log("fail");
                 }

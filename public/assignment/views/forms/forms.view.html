@@ -18,10 +18,14 @@
                             <td><span class="glyphicon glyphicon-plus right-spacing" ng-click="addForm(nform)"></span>
                                 <span class="glyphicon glyphicon-ok" ng-click="updateForm(nform)"></span></td>
                         </tr>
-                        <tr ng-repeat="form in forms">
-                            <td><span>{{form.title}}</span></td>
-                            <td><span class="glyphicon glyphicon-remove right-spacing" ng-click="deleteForm(form)"></span>
-                                <span class="glyphicon glyphicon-pencil" ng-click="updateForm(form)"></span></td>
+                        <tr ng-repeat="form in forms track by $index">
+                            <td ng-if="editingForm !== $index"><span>{{form.title}}</span></td>
+                            <td ng-if="editingForm !== $index">
+                                <span class="glyphicon glyphicon-remove right-spacing"
+                                      ng-click="deleteForm(form, $index)">
+                                </span>
+                                <span class="glyphicon glyphicon-pencil" ng-click="selectForm(form, $index)"></span>
+                            </td>
                         </tr>
                     </table>
                 </form>
