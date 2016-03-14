@@ -4,6 +4,6 @@ app.use(express.static(__dirname + '/public'));
 var ipaddress = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1';
 var port = process.env.OPENSHIFT_NODEJS_PORT || 3000;
 app.listen(port, ipaddress);
-app.get('/home', function(req, res){
-    res.send('/');
+app.get('/', function(req, res){
+    res.sendfile('/public/landing.html', {root: __dirname });
 });

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .link-content {
+            padding-top:50px;
+        }
+    </style>
+</head>
+<body ng-controller="MainController">
+<div ng-include="'./views/header/header.view.html'"></div>
+<div class="container-fluid view_container">
+    <div>
+        <nav class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#/">Landing Page</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="assignment/">Assignments</a></li>
+                        <li><a href="project/">Project Proof of Concept</a></li>
+                        <li>
+                            <a
+                            href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
+                            Project Proposal</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <div class="container-fluid link-content">
+        <div class="row padding-top">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">Assignment Link</h1>
+                <div class="row ">
+                    <a href="assignment/">Click Here for Assignment Link</a>
+                </div>
+                <h1 class="page-header">Project Links</h1>
+                <div class="row ">
+                    <a href="project/">Click Here for Project Proof of Concept</a> <br>
+                    <a href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
+                        Click here to go to Project Proposal</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+</html>
