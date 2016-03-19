@@ -19,7 +19,8 @@
                                 <span class="glyphicon glyphicon-ok" ng-click="updateForm(nform)"></span></td>
                         </tr>
                         <tr ng-repeat="form in forms track by $index">
-                            <td ng-if="editingForm !== $index"><span>{{form.title}}</span></td>
+                            <td ng-if="editingForm !== $index">
+                                <span class="clickable" ng-click="goToFields(form)">{{form.title}}</span></td>
                             <td ng-if="editingForm !== $index">
                                 <span class="glyphicon glyphicon-remove right-spacing"
                                       ng-click="deleteForm(form, $index)">

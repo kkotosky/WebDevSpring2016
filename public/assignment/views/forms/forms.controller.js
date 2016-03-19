@@ -13,15 +13,20 @@
         $rootScope.editingForm = -1;
         $rootScope.nform = {name : ""};
 
+
+        $rootScope.goToFields = goToFields;
+        function goToFields(form) {
+            console.log(form);
+            $location.url("/form/"+form._id+"/fields");
+        }
+
         FormService.findAllFormsForUser($rootScope.user._id).then(function(forms) {
             $rootScope.forms = forms.data;
         });
-
         function updateform(title) {
             if ($rootScope.editingForm >= 0) {
                 $rootScope.forms[$rootScope.editingForm].title = title.name;
                 var upForm = $rootScope.forms[$rootScope.editingForm];
-                console.log(upForm);
                 FormService.updateFormById(upForm._id, upForm).then(function(resp) {
                     console.log("updates completed");
                 });

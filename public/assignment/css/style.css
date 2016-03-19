@@ -25,3 +25,6 @@ table .glyphicon{
 .glyphicon{
     cursor: pointer;
 }
+.clickable {
+    cursor:pointer;
+}

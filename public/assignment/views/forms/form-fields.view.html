@@ -3,102 +3,73 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <h1 class="page-header">Form Fields</h1>
             <ul class="nav nav-tabs">
-                <li><a href="/assignment/forms.html">Forms</a></li>
+                <li><a href="/assignment/#/forms">Forms</a></li>
                 <li class="active"><a>Fields</a></li>
             </ul>
             <div class="row lower">
                 <form class="form-horizontal">
-                    <div class="form-group">
-                        <label for="input_fname" class=" text-left col-sm-12">First Name</label><br>
-                        <div class="col-sm-6">
-                            <input type="text" class=" high-width form-control inline" id="input_fname" placeholder="First Name">
-                            <span class="pull-right">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input_lname" class="high-width text-left col-sm-12">Last Name</label><br>
-                        <div class="col-sm-6">
-                            <input type="text" class=" high-width form-control inline" id="input_lname" placeholder="Last Name">
-                            <span class="pull-right vert-center">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input_lname" class="high-width text-left col-sm-12">Gender</label><br>
-                        <div class="col-sm-6">
-                            <select name="gender" class="high-width">
-                                <option value="male">Male</option>
-                                <option value="female">Female</option>
-                            </select>
-                            <span class="pull-right vert-center">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input_roles" class="high-width text-left col-sm-12">Roles</label><br>
-                        <div class="col-sm-6">
-                            <span class="pull-right vert-center">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                            <input type="text" id="input_roles" class="hasDatePicker">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input_lname" class="high-width text-left col-sm-12">Roles</label><br>
-                        <div class="col-sm-6">
-                            <span class="pull-right vert-center">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                            <input type="checkbox" name="role" value="admin">Admin<br>
-                            <input type="checkbox" name="role" value="student">Student<br>
-                            <input type="checkbox" name="role" value="user">User
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label for="input_ageement" class="high-width text-left col-sm-12">Liscense Agreement</label><br>
-                        <div class="col-sm-6">
-                            <span class="pull-right vert-center">
-                                <span class="glyphicon glyphicon-pencil"></span>
-                                <span class="glyphicon glyphicon-plus"></span>
-                                <span class="glyphicon glyphicon-remove"></span>
-                                <span class="glyphicon glyphicon-align-justify"></span>
-                            </span>
-                            <input type="radio" id="input_ageement" name="liscence" value="agree">Agree<br>
-                            <input type="radio" name="liscence" value="disagree">Disagree<br>
+                    <div ng-repeat="field in formFields">
+                        <div ng-switch on="field.type">
+                            <div ng-switch-when="TEXT" class="form-group">
+                                <label for="input_fname" class=" text-left col-sm-12">{{::field.label}}</label><br>
+                                <div class="col-sm-6">
+                                    <input type="text" class=" high-width form-control inline" id="input_fname"
+                                           placeholder="{{::field.placeholder}}">
+                                    <span class="pull-right">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <span class="glyphicon glyphicon-align-justify"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-switch-when="OPTIONS">
+                                <label class="high-width text-left col-sm-12">{{::field.label}}</label><br>
+                                <div class="col-sm-6">
+                                    <select name="gender" class="high-width">
+                                        <option ng-repeat="option in field.options" value="option.value">
+                                            {{::option.label}}
+                                        </option>
+                                    </select>
+                                    <span class="pull-right vert-center">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <span class="glyphicon glyphicon-align-justify"></span>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group" ng-switch-when="EMAIL">
+                                <label class="high-width text-left col-sm-12">{{::field.label}}</label><br>
+                                <div class="col-sm-6">
+                                    <input type="email" class="form-control" id="input_email"
+                                           placeholder="{{::field.placeholder}}">
+                                    <span class="pull-right vert-center">
+                                        <span class="glyphicon glyphicon-pencil"></span>
+                                        <span class="glyphicon glyphicon-plus"></span>
+                                        <span class="glyphicon glyphicon-remove"></span>
+                                        <span class="glyphicon glyphicon-align-justify"></span>
+                                    </span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group border-top">
                         <label for="input_new_field" class="high-width text-left col-sm-12">Add New Field</label><br>
                         <div class="col-sm-6">
                             <span class="pull-right vert-center">
-                                <i class="glyphicon glyphicon-plus pointer" data-toggle="modal" data-target="#field_prop_modal"></i>
+                                <i class="glyphicon glyphicon-plus pointer" data-toggle="modal"
+                                   ng-click="addField()"
+                                   data-target="#field_prop_modal"></i>
                             </span>
-                            <select name="gender" id="input_new_field" class="high-width">
-                                <option value="single_line">Single Line Text</option>
-                                <option value="date">Date</option>
-                                <option value="dropdown">Dropdown</option>
-                                <option value="checkboxes">Checkboxes</option>
-                                <option value="radio_buttons">Radio Buttons</option>
-                                <option value="paragraph_text_field">Paragraph Text Field</option>
+                            <select name="type" ng-model="newField.type" id="input_new_field" class="high-width">
+                                <option value="TEXT">Single Line Text</option>
+                                <option value="DATE">Date</option>
+                                <option value="OPTIONS">Dropdown</option>
+                                <option value="EMAIL">Dropdown</option>
+                                <option value="CHECKBOX">Checkboxes</option>
+                                <option value="RADIO">Radio Buttons</option>
+                                <option value="PARAGRAPH">Paragraph Text Field</option>
                             </select>
                         </div>
                     </div>
