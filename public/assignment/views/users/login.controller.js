@@ -8,16 +8,16 @@
         $rootScope.login = login;
 
         function login (user) {
-            UserService.findUserByCredentials(user.username, user.password, function(userInfo){
+            UserService.findUserByCredentials(user.username, user.password).then(function(userInfo){
                 if (userInfo != null) {
-                    $rootScope.user = userInfo;
+                    $rootScope.user = userInfo.data;
                     $location.url("/profile");
                     $rootScope.loggedIn = true;
                     $rootScope.isAdmin = _.contains(userInfo.roles, 'admin');
                 } else {
                     console.log("fail");
                 }
-            });
+            })
         }
     }
 })();

@@ -8,9 +8,10 @@
 
         $rootScope.updateUser = updateUser;
         function updateUser (user) {
-            UserService.updateUser($rootScope.user._id, $rootScope.user, function(upUser){
+            console.log($rootScope.user);
+            UserService.updateUser($rootScope.user._id, $rootScope.user).then(function(upUser){
                 if (upUser) {
-                    $rootScope.user = upUser;
+                    $rootScope.user = upUser.data;
                     console.log("success");
                 } else {
                     console.log("fail");

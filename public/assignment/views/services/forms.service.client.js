@@ -30,39 +30,19 @@
         return api;
 
         function createFormForUser(userId, form, callback) {
-            form._id = generateUUID();
-            form.userId = userId;
-            data.push(form);
-            callback(form);
+            return $http.post("/api/assignment/user/"+userId+"/form", form);
         }
 
         function findAllFormsForUser(userId, callback) {
-            var tmp = [];
-            for (var i = 0; i < data.length; i++) {
-                if (data[i].userId === userId) {
-                    tmp.push(data[i]);
-                }
-            }
-            callback(tmp);
+            return $http.get('/api/assignment/user/'+userId+'/form');
         }
 
         function deleteFormById(formId, callback) {
-            var tmp = [];
-            for (var i = 0; i < data.length; i++) {
-                if (data[i]._id === formId ) {
-                    data.splice(i,i+1);
-                }
-            }
-            callback(data);
+            return $http.delete('/api/assignment/form/'+formId);
         }
 
         function updateFormById(formId, newForm, callback) {
-            for (var i = 0; i < data.length; i++) {
-                if (data[i]._id === formId) {
-                    data[i] = newForm
-                }
-            }
-            callback(newForm);
+            return $http.put('/api/assignment/form/'+formId, newForm);
         }
     }
 })();

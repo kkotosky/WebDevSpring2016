@@ -13,15 +13,16 @@
         $rootScope.editingForm = -1;
         $rootScope.nform = {name : ""};
 
-        FormService.findAllFormsForUser($rootScope.user._id, function(forms) {
-            $rootScope.forms = forms;
+        FormService.findAllFormsForUser($rootScope.user._id).then(function(forms) {
+            $rootScope.forms = forms.data;
         });
 
         function updateform(title) {
             if ($rootScope.editingForm >= 0) {
                 $rootScope.forms[$rootScope.editingForm].title = title.name;
-                var upForm = $rootScope.forms[$rootScope.editingForm].title;
-                FormService.updateFormById(upForm._id, upForm,function(resp) {
+                var upForm = $rootScope.forms[$rootScope.editingForm];
+                console.log(upForm);
+                FormService.updateFormById(upForm._id, upForm).then(function(resp) {
                     console.log("updates completed");
                 });
             }
@@ -33,19 +34,20 @@
             var newForm  = {
                 title:toBeForm.name
             };
-            FormService.createFormForUser($rootScope.user._id, newForm, function(newForm){
+            FormService.createFormForUser($rootScope.user._id, newForm).then(function(newForm){
                 if (newForm) {
-                    $rootScope.forms.push(newForm);
+                    $rootScope.forms.push(newForm.data);
                 } else {
                     console.log("failed");
                 }
+            }, function(e){
+                console.log("failed");
             });
             $rootScope.nform = {name : ""};
-            console.log($rootScope.nform);
         };
 
         function deleteForm(form,i){
-            FormService.deleteFormById(form._id, function(resp){
+            FormService.deleteFormById(form._id).then(function(resp){
                 $rootScope.forms.splice(i,i+1);
             });
         };
