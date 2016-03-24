@@ -1,0 +1,11 @@
+{"users":
+  [
+  {"_id":123, "firstName":"Dick","lastName":"Grayson", "username":"nightwing","password":"nightwing"},
+  {"_id":234, "firstName":"Tim","lastName":"Drake", "username":"red robin","password":"red robin"},
+  {"_id":345, "firstName":"Damian","lastName":"Wayne", "username":"robin","password":"robin"},
+  {"_id":456, "firstName":"Jason","lastName":"Todd", "username":"redhood","password":"redhood"},
+  {"_id":567, "firstName":"Barbara","lastName":"Gordon", "username":"batgirl","password":"batgirl"},
+  {"_id":678, "firstName":"Bruce","lastName":"Wayne", "username":"batman","password":"batman"}
+
+  ]
+}

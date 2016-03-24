@@ -8,11 +8,11 @@
         $rootScope.numRows = 0;
         $rootScope.numCols = 0;
         QuizService.getFullQuiz(id).then(function(resp){
-            $rootScope.quiz = resp;
-            $rootScope.numRows = resp.rows;
-            $rootScope.numCols = resp.columns;
+            $rootScope.quiz = resp.data;
+            $rootScope.numRows = resp.data.rows;
+            $rootScope.numCols = resp.data.columns;
             $rootScope.classes = {
-                rows :getRowClass(resp.columns)
+                rows :getRowClass(resp.data.columns)
             }
         });
         $rootScope.getArray = function(num) {

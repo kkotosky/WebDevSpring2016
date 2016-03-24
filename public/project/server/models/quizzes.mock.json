@@ -1,0 +1,43 @@
+{ "data":{
+    "userQuizzes": [
+      {
+        "title": "Star Wars Planets",
+        "_id": "1",
+        "description": "Name the star wars planets featured in the original trilogy?",
+        "creator": "123"
+      },
+      {
+        "title": "Boston T Stops",
+        "_id": "2",
+        "description": "Name the T stops based upon line color?",
+        "creator": "123"
+      },
+      {
+        "title": "Super Hero Identities",
+        "_id": "3",
+        "creator": "234",
+        "description": "Name the heroes secret identities"
+      }
+    ],
+    "popQuizzes": [
+      {
+        "title": "151 Pokemon",
+        "_id": "4",
+        "creator": "456",
+        "description": "Caught 'em all? Super! Now and name em all!"
+      },
+      {
+        "title": "NFL Teams",
+        "_id": "5",
+        "creator": "678",
+        "description": "Can you name all of the teams in the National Football League?"
+      },
+      {
+        "title": "Injustice Characters",
+        "_id": "6",
+        "creator": "888",
+        "description": "Can you name the playable characters in Injustice: Gods among us?"
+      }
+    ]
+  }
+}

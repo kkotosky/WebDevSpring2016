@@ -9,4 +9,5 @@ app.get('/', function(req, res){
     res.sendfile('/public/landing.html', {root: __dirname });
 });
 require("./public/assignment/server/app.js")(app);
+require("./public/project/server/app.js")(app);
 app.listen(port, ipaddress);
