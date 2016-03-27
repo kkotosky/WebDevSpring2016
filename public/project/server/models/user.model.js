@@ -4,7 +4,7 @@ var q = require("q");
 module.exports = function(db, mongoose) {
 
     var api = {
-        findUserByCredentials: findUserByCredentials,
+        findByUserCredentials: findByUserCredentials,
         findAllUsers: findAllUsers,
         createUser: createUser,
         deleteUserById: deleteUserById,
@@ -22,7 +22,7 @@ module.exports = function(db, mongoose) {
             s4() + '-' + s4() + s4() + s4();
     }
 
-    function findUserByCredentials(username, password) {
+    function findByUserCredentials(username, password) {
         var def = q.defer();
         for (var i = 0; i < mockUsers.length; i++) {
             if ( mockUsers[i].username === username &&
@@ -31,13 +31,13 @@ module.exports = function(db, mongoose) {
                 break;
             }
         }
-        return q.promise;
+        return def.promise;
     }
 
     function findAllUsers(callback) {
         var def = q.defer();
-        q.resolve(mockUsers);
-        return q.promise;
+        def.resolve(mockUsers);
+        return def.promise;
     }
 
     function createUser(user) {

@@ -10,8 +10,6 @@ module.exports = function(db, mongoose) {
     };
     var userQuizzes = metaDataQuizzesMock.userQuizzes;
     var popQuizzes = metaDataQuizzesMock.popQuizzes;
-    console.log(userQuizzes);
-    console.log(popQuizzes);
 
     var allQuizzes = userQuizzes.concat(popQuizzes);
 
@@ -19,7 +17,6 @@ module.exports = function(db, mongoose) {
 
 
     function getPopQuizzes() {
-        console.log(metaDataQuizzesMock);
         var def = q.defer();
         def.resolve(popQuizzes);
         return def.promise;
@@ -59,4 +56,5 @@ module.exports = function(db, mongoose) {
         def.resolve(titleTmp.concat(descriptTmp));
         return def.promise;
     };
+
 };

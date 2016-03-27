@@ -16,6 +16,10 @@
         $rootScope.editQuiz = function (quiz) {
             $location.url("/edit?quizId="+quiz._id);
         };
+        $rootScope.logout = function(){
+            $rootScope.currentUser = {};
+            $rootScope.loggedIn = false;
+        }
 
     }
 })();

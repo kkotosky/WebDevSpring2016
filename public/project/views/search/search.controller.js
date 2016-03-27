@@ -7,14 +7,14 @@
         if ($routeParams) {
             var val = $routeParams.search;
             QuizService.searchQuizzes(val).then(function(resp){
-                $rootScope.validQuizzes = resp;
+                $rootScope.validQuizzes = resp.data;
             });
             $rootScope.searchVal = {text : val};
             $rootScope.pageSearch = {text : val};
         }
         $rootScope.makeNewSearch = function(text) {
             QuizService.searchQuizzes(text).then(function(resp){
-                $rootScope.validQuizzes = resp;
+                $rootScope.validQuizzes = resp.data;
             });
             $rootScope.search = {text: text}
             $location.search('search', text);

@@ -20,6 +20,10 @@
                 templateUrl: "views/users/profile.view.html",
                 controller:  "ProfileController"
             })
+            .when("/editprofile", {
+                templateUrl: "views/users/edit_profile.view.html",
+                controller:  "EditProfileController"
+            })
             .when("/search", {
                 templateUrl: "views/search/search.view.html",
                 controller:  "SearchController"
