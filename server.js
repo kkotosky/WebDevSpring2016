@@ -2,17 +2,17 @@ var express = require('express');
 var mongoose = require('mongoose');
 var app = express();
 var connectionString = 'mongodb://127.0.0.1:27017/assignmentMongoDB';
-var db = mongoose.connect(connectionString);
-
 
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
-    console.log("========================================================");
-    connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
-        process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
-        process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
-        process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
-        process.env.OPENSHIFT_APP_NAME;
-}
+ connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
+     process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
+     process.env.OPENSHIFT_MONGODB_DB_HOST + ':' +
+     process.env.OPENSHIFT_MONGODB_DB_PORT + '/' +
+     process.env.OPENSHIFT_APP_NAME;
+ }
+
+var db = mongoose.connect(connectionString);
+
 
 app.use(express.static(__dirname + '/public'));
 app.use(express.bodyParser());
