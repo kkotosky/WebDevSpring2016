@@ -10,7 +10,7 @@
         function login (user) {
             UserService.findUserByCredentials(user.username, user.password).then(function(userInfo){
                 if (userInfo != null) {
-                    $rootScope.user = userInfo.data;
+                    $rootScope.user = userInfo.data[0];
                     $location.url("/profile");
                     $rootScope.loggedIn = true;
                     $rootScope.isAdmin = _.contains(userInfo.roles, 'admin');

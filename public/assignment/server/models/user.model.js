@@ -1,7 +1,7 @@
 var mock = require("./user.mock.json");
 var q = require("q");
 
-module.exports = function() {
+module.exports = function(db, mongoose) {
 
     // load user schema
     var api = {
@@ -14,101 +14,103 @@ module.exports = function() {
         findByUserCredentials: findByUserCredentials,
         updateUser: updateUser
     };
+    var userSchema = require('./user.schema.server.js')(mongoose);
+    var UserModel = mongoose.model("User", userSchema);
+
     return api;
 
+    function ensureUserInFormat(user){
+        return {
+            username: user.username || "",
+            password: user.password || "",
+            firstName: user.firstName || "",
+            lastName: user.lastName || "",
+            emails: [user.email] || "",
+            _id : user._id || "",
+            phones: user.phones || ""
+        };
+
+    }
     function createUser(user) {
         var def = q.defer();
-        mock.data.push(user);
-        def.resolve(user);
+        // insert new user with mongoose user model's create()
+        var newUser = ensureUserInFormat(user);
+        UserModel.create(newUser, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
+            }
+        });
         return def.promise;
     }
     function deleteUser(id) {
         var def = q.defer();
-        var found = false;
-        for (var i = 0; i < mock.data.length; i++) {
-            if (mock.data[i]._id === id) {
-                mock.data.splice(i, i+1);
-                found = true;
-                break;
+
+        UserModel.remove({_id:id}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        if (found) {
-            def.resolve(mock.data);
-        } else {
-            def.reject("Not Found");
-        }
+        });
+
         return def.promise;
     }
     function findAllUsers() {
         var def = q.defer();
-        if (mock.data.length > 0) {
-            def.resolve(mock.data);
-        } else {
-            def.reject("No Users Exist");
-        }
+        UserModel.find({}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
+            }
+        });
         return def.promise;
     }
     function findByUsername(username) {
         var def = q.defer();
-        var found = false;
-        for (var i = 0; i < mock.data.length; i++) {
-            if (mock.data[i].username === username) {
-                def.resolve(mock.data[i]);
-                found = true;
-                break;
+        UserModel.find({username:username}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        if (!found) {
-            def.reject("Not Found");
-        }
+        });
         return def.promise;
     }
     function findById(id) {
         var def = q.defer();
-        var found = false;
-        for (var i = 0; i < mock.data.length; i++) {
-            console.log(mock.data[i]);
-            if (""+mock.data[i]._id === id) {
-                found = true;
-                def.resolve(mock.data[i]);
-                break;
+        UserModel.find({_id:id}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        if (!found) {
-            def.reject("Not Found");
-        }
+        });
         return def.promise;
     }
     function findByUserCredentials(username, password) {
         var def = q.defer();
-        var found = false;
-        for (var i = 0; i < mock.data.length; i++) {
-            if (mock.data[i].username === username && mock.data[i].password === password) {
-                def.resolve(mock.data[i]);
-                found = true;
-                break;
+        UserModel.find({username:username, password:password}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        if (!found) {
-            def.reject("Not Found");
-        }
+        });
         return def.promise;
     }
     function updateUser(id, user) {
         var def = q.defer();
-        var found = false;
-        for (var i = 0; i < mock.data.length; i++) {
-            if (mock.data[i]._id === id) {
-                mock.data[i] = user;
-                def.resolve(mock.data[i]);
-                found = true;
-                break;
+        var newUser = ensureUserInFormat(user);
+        UserModel.update({_id:id}, newUser, {}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        if (!found) {
-            def.reject("Not Found");
-        }
+        });
         return def.promise;
     }
-
-}
+};

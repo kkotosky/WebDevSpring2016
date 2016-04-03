@@ -11,8 +11,7 @@
             console.log($rootScope.user);
             UserService.updateUser($rootScope.user._id, $rootScope.user).then(function(upUser){
                 if (upUser) {
-                    $rootScope.user = upUser.data;
-                    console.log("success");
+                    window.alert("Successful Update")
                 } else {
                     console.log("fail");
                 }

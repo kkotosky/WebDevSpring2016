@@ -21,6 +21,7 @@
         }
 
         FormService.findAllFormsForUser($rootScope.user._id).then(function(forms) {
+            console.log(forms.data);
             $rootScope.forms = forms.data;
         });
         function updateform(title) {
@@ -41,7 +42,7 @@
             };
             FormService.createFormForUser($rootScope.user._id, newForm).then(function(newForm){
                 if (newForm) {
-                    $rootScope.forms.push(newForm.data);
+                    $rootScope.forms.push(newForm.data[0]);
                 } else {
                     console.log("failed");
                 }
