@@ -4,6 +4,7 @@ var app = express();
 var connectionString = 'mongodb://127.0.0.1:27017/assignmentMongoDB';
 var db = mongoose.connect(connectionString);
 
+
 if(process.env.OPENSHIFT_MONGODB_DB_PASSWORD) {
     connectionString = process.env.OPENSHIFT_MONGODB_DB_USERNAME + ":" +
         process.env.OPENSHIFT_MONGODB_DB_PASSWORD + "@" +
