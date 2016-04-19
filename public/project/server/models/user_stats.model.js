@@ -60,10 +60,15 @@ module.exports = function(db, mongoose) {
 
     function updateStats(username, stats) {
         var def = q.defer();
-        userstatsModel.update({username:username}, stats , function (err, doc) {
+        userstatsModel.findOne({username:username},function (err, doc) {
             if (err) {
                 def.reject(err);
             } else {
+                doc.average = stats.average;
+                doc.lastPlayed = stats.lastPlayed;
+                doc.gamesPlayed = stats.gamesPlayed;
+                doc.priorQuizzes = stats.priorQuizzes;
+                doc.save();
                 def.resolve(doc);
             }
         });
