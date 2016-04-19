@@ -6,16 +6,15 @@ module.exports = function(db, mongoose) {
         getPopQuizzes: getPopQuizzes,
         getUserQuizzes: getUserQuizzes,
         getQuiz: getQuiz,
-        searchQuizzes:searchQuizzes,
+        searchQuizzes:searchQuizzes
     };
+    var metaQuizSchema = require('./metadata.schema.server.js')(mongoose);
+    var metaQuizModel = mongoose.model("MetaQuiz", metaQuizSchema);
+
     var userQuizzes = metaDataQuizzesMock.userQuizzes;
     var popQuizzes = metaDataQuizzesMock.popQuizzes;
-
     var allQuizzes = userQuizzes.concat(popQuizzes);
-
     return api;
-
-
     function getPopQuizzes() {
         var def = q.defer();
         def.resolve(popQuizzes);
@@ -24,7 +23,6 @@ module.exports = function(db, mongoose) {
     function getUserQuizzes (id) {
         var def = q.defer();
         var tmp = [];
-        console.log(allQuizzes);
         for (var i = 0; i < allQuizzes.length; i++) {
             if (id === allQuizzes[i].creator) {
                 tmp.push(allQuizzes[i]);

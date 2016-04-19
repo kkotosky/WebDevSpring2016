@@ -1,24 +1,41 @@
 <div class="container-fluid col-sm-offset-1">
-    <div class="row">
-        <h2 class="pull-right">Time Remaining 13:00</h2>
+    <div class="row quiz_title">
         <h2> {{quiz.title}} </h2>
+        <button class="give_up_button pull-right" ng-click="giveUp()">Give Up!!</button>
     </div>
-    <div class="row" ng-if="quiz.multi">
+    <div class="row" ng-if="!quiz.multi">
         <h3> {{quiz.question}} </h3>
     </div>
-    <div class="row">
-        <input type="text" placeholder="Type answers here..." ng-model="input.answer">
+    <div class="row" ng-if="!quiz.multi">
+        <input type="text" placeholder="Type answers here..."
+               ng-model="input.answer" ng-change="enterValue(input.answer)">
     </div>
-    <div ng-repeat="i in getArray(numRows) track by $index">
-        <div class ="row">
-            <div ng-repeat="j in getArray(numCols) track by $index">
-                <div class="{{classes.rows}} main">
-                    <span ng-if="quiz.headers[($index*$parent.$index)] !== null">
-                        {{quiz.headers[($index*$parent.$index)]}}
-                    </span>
-                    <div ng-repeat="answer in getSection($index, $parent.$index)">
-                        <span class="answer_loc">{{answer}}</span>
-                    </div>
+
+    <div class="row" ng-if="quiz.multi">
+        <label class="current_multi_question">{{question.current}}</label> <br>
+        <input type="text" placeholder="Type answers here..."
+               ng-model="input.answer" ng-change="enterValue(input.answer)">
+    </div>
+    <div class="view_container" ng-repeat="i in getArray(quiz.rows) track by $index">
+        <div class="row">
+            <div class="{{getRowClass(quiz.columns)}}" ng-repeat="j in getArray(quiz.columns) track by $index">
+                <label class="quiz_section_heading">
+                    {{quiz.headers[$index+$parent.$index+($parent.$index*(quiz.columns-1))]}}
+                </label>
+                <div ng-repeat="y in quiz.displayAnswers[$parent.$index][$index] track by $index">
+                    <label ng-if="quiz.multi" class="question"
+                           id="{{getIdString($parent.$parent.$parent.$index,
+                            $parent.$parent.$index,
+                            $index)}}"
+                           ng-click="activateQuestion($event,
+                            $parent.$parent.$parent.$index,
+                            $parent.$parent.$index,
+                            $index)">
+                        {{quiz.questions[$parent.$parent.$parent.$index][$parent.$parent.$index][$index]}}
+                    </label>
+                    <br ng-if="quiz.multi"/>
+                    <label> {{$index+1}}. </label>
+                    <span> {{y}} </span>
                 </div>
             </div>
         </div>

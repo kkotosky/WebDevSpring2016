@@ -66,3 +66,42 @@ table .glyphicon{
     margin-bottom: 6px;
     line-height:2.5;
 }
+.ng-invalid {
+    border-color: red;
+}
+
+.create_quiz_rows {
+    border-bottom: 1px solid black;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.create_quiz_columns {
+    padding-top:10px;
+    padding-bottom:10px;
+}
+.create_answers {
+    padding-left:30px;
+}
+.even-column {
+    background-color: #d3d3d3;
+}
+.finish_quiz {
+    height: 50px;
+    width:50%
+}
+.active_question {
+    color: #428bca;
+}
+.quiz_title {
+    margin-bottom: 30px;
+}
+.current_multi_question {
+    font-size: larger;
+}
+.quiz_section_heading {
+    font-size: large;
+}
+.give_up_button {
+    height: 50px;
+    width:15%;
+}

@@ -9,7 +9,8 @@
             getUserQuizzes: getUserQuizzes,
             getQuiz: getQuiz,
             searchQuizzes:searchQuizzes,
-            getFullQuiz: getFullQuiz
+            getFullQuiz: getFullQuiz,
+            makeFullQuiz: makeFullQuiz
         };
         return api;
 
@@ -28,6 +29,9 @@
         function getFullQuiz(id) {
             return $http.get("/api/project/quizzes/full/"+id);
 
+        }
+        function makeFullQuiz(quiz) {
+            return $http.post("/api/project/quizzes/full", quiz);
         }
         //Will Need to function to sort which are most relevant to user (i.e.) Popularity
     }

@@ -28,6 +28,10 @@
                 templateUrl: "views/search/search.view.html",
                 controller:  "SearchController"
             })
+            .when("/create", {
+                templateUrl: "views/create/create.view.html",
+                controller:  "CreateController"
+            })
             .when("/quiz", {
                 templateUrl: "views/quiz/quiz.view.html",
                 controller:  "QuizController"
