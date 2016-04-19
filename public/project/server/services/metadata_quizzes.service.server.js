@@ -3,6 +3,7 @@ module.exports = function(app, model) {
     app.get("/api/project/quizzes/meta/user/:id", getUserQuizzes);
     app.get("/api/project/quizzes/meta/:quizId", getQuiz);
     app.get("/api/project/quizzes/meta/search/:searchText", searchQuizzes);
+    app.post("/api/project/quizzes/meta", makeMetaQuizzes);
 
     function generateUUID() {
         function s4() {
@@ -47,6 +48,15 @@ module.exports = function(app, model) {
         var searchText = req.params.searchText;
         model.searchQuizzes(searchText).then(function(resp){
             console.log(resp);
+            res.json(resp);
+        }, function (e) {
+            res.status(404).send(e);
+        });
+    }
+
+    function makeMetaQuizzes(req, res) {
+        var metaQuiz = req.body;
+        model.makeMetaQuizzes(metaQuiz).then(function(resp){
             res.json(resp);
         }, function (e) {
             res.status(404).send(e);

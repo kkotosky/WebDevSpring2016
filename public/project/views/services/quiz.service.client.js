@@ -10,7 +10,8 @@
             getQuiz: getQuiz,
             searchQuizzes:searchQuizzes,
             getFullQuiz: getFullQuiz,
-            makeFullQuiz: makeFullQuiz
+            makeFullQuiz: makeFullQuiz,
+            makeMetaQuizzes: makeMetaQuizzes
         };
         return api;
 
@@ -28,10 +29,12 @@
         }
         function getFullQuiz(id) {
             return $http.get("/api/project/quizzes/full/"+id);
-
         }
         function makeFullQuiz(quiz) {
             return $http.post("/api/project/quizzes/full", quiz);
+        }
+        function makeMetaQuizzes(metaQuiz) {
+            return $http.post("/api/project/quizzes/meta", metaQuiz);
         }
         //Will Need to function to sort which are most relevant to user (i.e.) Popularity
     }

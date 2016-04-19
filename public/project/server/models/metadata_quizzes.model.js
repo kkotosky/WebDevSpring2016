@@ -6,7 +6,9 @@ module.exports = function(db, mongoose) {
         getPopQuizzes: getPopQuizzes,
         getUserQuizzes: getUserQuizzes,
         getQuiz: getQuiz,
-        searchQuizzes:searchQuizzes
+        searchQuizzes:searchQuizzes,
+        makeMetaQuizzes:makeMetaQuizzes
+
     };
     var metaQuizSchema = require('./metadata.schema.server.js')(mongoose);
     var metaQuizModel = mongoose.model("MetaQuiz", metaQuizSchema);
@@ -15,44 +17,60 @@ module.exports = function(db, mongoose) {
     var popQuizzes = metaDataQuizzesMock.popQuizzes;
     var allQuizzes = userQuizzes.concat(popQuizzes);
     return api;
+
+    function makeMetaQuizzes(quiz) {
+        var def = q.defer();
+        metaQuizModel.create(quiz, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
+            }
+        });
+        return def.promise;
+    }
     function getPopQuizzes() {
         var def = q.defer();
-        def.resolve(popQuizzes);
+        metaQuizModel.find({}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
+            }
+        });
         return def.promise;
     }
     function getUserQuizzes (id) {
         var def = q.defer();
-        var tmp = [];
-        for (var i = 0; i < allQuizzes.length; i++) {
-            if (id === allQuizzes[i].creator) {
-                tmp.push(allQuizzes[i]);
+        metaQuizModel.find({createdBy:id}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        def.resolve(tmp);
+        });
         return def.promise;
     }
     function getQuiz (id) {
         var def = q.defer();
-        for (var i = 0; i < allQuizzes.length; i++) {
-            if (id === allQuizzes[i]._id) {
-                def.resolve(allQuizzes[i])
+        metaQuizModel.find({_id:id}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
+        });
         return def.promise;
     }
     function searchQuizzes (text) {
         var def = q.defer();
-        var titleTmp = [];
-        var descriptTmp = []
-        for (var i = 0; i < allQuizzes.length; i++) {
-            if (allQuizzes[i].title.indexOf(text) >= 0) {
-                titleTmp.push(allQuizzes[i]);
-            } else if (allQuizzes[i].description.indexOf(text) >= 0){
-                descriptTmp.push(allQuizzes[i]);
+        metaQuizModel.find({title:{$regex:text}}, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
             }
-        }
-        def.resolve(titleTmp.concat(descriptTmp));
+        });
         return def.promise;
-    };
-
+    }
 };

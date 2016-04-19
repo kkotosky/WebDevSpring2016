@@ -4,6 +4,9 @@
         .controller("CreateController", CreateController);
 
     function CreateController($location, $rootScope, QuizService) {
+        if (!$rootScope.loggedIn) {
+            $location.url("/register")
+        }
         $rootScope.numAnswers = [[[0],[0],[0],[0]], [[0],[0],[0],[0]]];
         $('#question_type').val("single");
         $rootScope.create = {
@@ -95,17 +98,19 @@
                     }
                 }
             }
-
-            return {
+            var tmp = {
                 answers1: toReturnRows[0][0],
                 answers2: toReturnRows[0][1],
                 answers3: toReturnRows[0][2],
-                answers4: toReturnRows[0][3],
-                answers5: toReturnRows[1][0],
-                answers6: toReturnRows[1][1],
-                answers7: toReturnRows[1][2],
-                answers8: toReturnRows[1][3]
+                answers4: toReturnRows[0][3]
             }
+            if ($rootScope.create.numRows == '2') {
+                tmp['answers5'] = toReturnRows[1][0];
+                tmp['answers6'] = toReturnRows[1][1];
+                tmp['answers7'] = toReturnRows[1][2];
+                tmp['answer8'] = toReturnRows[1][3];
+            }
+            return tmp;
         };
         getQuestions = function() {
             var rows = $('.answer_inputs');
@@ -120,30 +125,40 @@
                     }
                 }
             }
-            return {
+            var tmp =  {
                 questions1: toReturnRows[0][0],
                 questions2: toReturnRows[0][1],
                 questions3: toReturnRows[0][2],
-                questions4: toReturnRows[0][3],
-                questions5: toReturnRows[1][0],
-                questions6: toReturnRows[1][1],
-                questions7: toReturnRows[1][2],
-                questions8: toReturnRows[1][3]
+                questions4: toReturnRows[0][3]
+            };
+            if ($rootScope.create.numRows == '2') {
+                tmp['questions5'] = toReturnRows[1][0];
+                tmp['questions6'] = toReturnRows[1][1];
+                tmp['questions7'] = toReturnRows[1][2];
+                tmp['questions8'] = toReturnRows[1][3];
             }
+            return tmp;
         };
         getHeaders = function() {
             var headers = $('.section_label');
-            console.log(headers);
-            console.log(headers.length);
             var toReturnHeaders = [];
             for(var i = 0; i < headers.length; i++) {
                 toReturnHeaders.push($(headers[i]).val());
             }
             return toReturnHeaders;
         };
+        getMetadata = function(fullQuiz) {
+            return {
+                _id: fullQuiz._id,
+                description: fullQuiz.description,
+                createdBy: fullQuiz.createdBy,
+                title: fullQuiz.title
+            }
+        };
         $rootScope.finishQuiz = function(){
             var questions = getQuestions();
             var answers = gatherAnswers();
+            console.log($rootScope);
             var quiz = {
                 title : $rootScope.create.title,
                 createdBy: $rootScope.currentUser._id,
@@ -172,7 +187,11 @@
             };
             console.log(quiz);
             QuizService.makeFullQuiz(quiz).then(function(resp){
-                window.alert("Successful Creation of Quiz");
+                QuizService.makeMetaQuizzes(getMetadata(resp.data)).then(function(resp) {
+                    window.alert("Successful Creation!");
+                }, function(err){
+                    window.alert("Failed To Create");
+                });
             }, function(err){
                 window.alert("Failed to Create Quiz");
             });

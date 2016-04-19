@@ -3,9 +3,10 @@
         .module("KevinSporcleApp")
         .controller("QuizController", QuizController);
 
-    function QuizController($location, $rootScope, QuizService, $routeParams) {
+    function QuizController($location, $rootScope, QuizService, $routeParams, UserStatsService) {
         var id = $routeParams.quizId;
         var totalAnswered = 0;
+        var totalQuestions = 0;
         $rootScope.numRows = 0;
         $rootScope.numCols = 0;
         $rootScope.input = {answer:""};
@@ -28,7 +29,6 @@
         $rootScope.getHeader = function(col,row) {
             return row==1 ? $rootScope.headers[(row+col)+$rootScope.quiz.columns-1] : $rootScope.headers[(row+col)];
         };
-
         $rootScope.activateQuestion= function($event, row,col,num) {
             var actives = $('.active_question')[0];
             if (actives){
@@ -46,21 +46,26 @@
             var r = -1;
             var r2 = -1;
             var r3 = -1;
+            var endGame = false;
             if (!$rootScope.quiz.multi || value == $rootScope.answer.current){
                 for (var i = 0; i< $rootScope.quiz.answers.length; i++ ) {
                     $rootScope.quiz.displayAnswers.push([]);
                     for (var j = 0; j< $rootScope.quiz.answers[i].length; j++ ) {
                         $rootScope.quiz.displayAnswers[i].push([]);
                         for (var y = 0; y< $rootScope.quiz.answers[i][j].length; y++ ) {
-                            if (value === $rootScope.quiz.answers[i][j][y] &&
+                            if (value.toLowerCase() === $rootScope.quiz.answers[i][j][y].toLowerCase() &&
                                 $rootScope.quiz.displayAnswers[i][j][y] != value) {
+                                console.log("MADE IT HERE");
                                 $rootScope.quiz.displayAnswers[i][j][y] = value;
                                 $rootScope.input.answer = "";
                                 found = true;
                                 totalAnswered++;
+                                if (totalAnswered == totalQuestions) {
+                                    endGame = true;
+                                }
                             }
                             if ($rootScope.quiz.displayAnswers[i][j][y] === "?????????????????????" && r === -1) {
-                                r = i;
+                                r =i;
                                 r2=j;
                                 r3=y;
                             }
@@ -77,6 +82,50 @@
                 $rootScope.answer ={ current : $rootScope.quiz.answers[r][r2][r3]};
                 $('#'+r+r2+r3).addClass('active_question');
             }
+            if (endGame) {
+                $rootScope.endTheGame();
+            }
+        };
+        $rootScope.endTheGame = function(){
+            if ($rootScope.loggedIn) {
+                UserStatsService.findStats($rootScope.currentUser.username).then(function(resp){
+                    var data = resp.data[0];
+                    data.lastPlayed = getTodaysDate();
+                    data.average = getAverage(data.average, data.gamesPlayed);
+                    data.gamesPlayed = data.gamesPlayed + 1;
+                    data.priorQuizzes = editPriorQuizzes(data.priorQuizzes);
+                    UserStatsService.updateStats($rootScope.currentUser.username, data).then(function(resp){
+                        window.alert("Your Stats have been updated")
+                    });
+                });
+            }
+            window.alert("You Scored: " + ((totalAnswered/totalQuestions) * 100));
+        };
+        editPriorQuizzes= function(pQuizzes) {
+            if (pQuizzes.length > 2) {
+                pQuizzes.slice(0,1);
+            }
+            pQuizzes.push($rootScope.quiz._id);
+            return pQuizzes;
+        };
+        getAverage = function(currentAve, gamesPlayed){
+            return ((currentAve * gamesPlayed) + ((totalAnswered/totalQuestions) * 100)) / (gamesPlayed+1);
+        };
+        getTodaysDate = function(){
+            var today = new Date();
+            var dd = today.getDate();
+            var mm = today.getMonth()+1; //January is 0!
+            var yyyy = today.getFullYear();
+
+            if(dd<10) {
+                dd='0'+dd
+            }
+
+            if(mm<10) {
+                mm='0'+mm
+            }
+
+            return mm+'/'+dd+'/'+yyyy;
         };
         $rootScope.getRowClass= function(numRows) {
             if(numRows === 1) {
@@ -111,25 +160,33 @@
             }
             if ($rootScope.quiz.columns >= 1) {
                 $rootScope.quiz.answers[0].push($rootScope.quiz.answers1);
+                totalQuestions = totalQuestions +  $rootScope.quiz.answers1.length;
                 if (isTwoRows) {
-                    $rootScope.quiz.answers[1].push([$rootScope.quiz.answers5]);
+                    totalQuestions = totalQuestions +  $rootScope.quiz.answers5.length;
+                    $rootScope.quiz.answers[1].push($rootScope.quiz.answers5);
                 }
             }
             if ($rootScope.quiz.columns >= 2) {
                 $rootScope.quiz.answers[0].push($rootScope.quiz.answers2);
+                totalQuestions = totalQuestions +  $rootScope.quiz.answers2.length;
                 if (isTwoRows) {
+                    totalQuestions = totalQuestions +  $rootScope.quiz.answers6.length;
                     $rootScope.quiz.answers[1].push($rootScope.quiz.answers6);
                 }
             }
             if ($rootScope.quiz.columns >= 3) {
+                totalQuestions = totalQuestions +  $rootScope.quiz.answers3.length;
                 $rootScope.quiz.answers[0].push($rootScope.quiz.answers3);
                 if (isTwoRows) {
+                    totalQuestions = totalQuestions +  $rootScope.quiz.answers7.length;
                     $rootScope.quiz.answers[1].push($rootScope.quiz.answers7);
                 }
             }
             if ($rootScope.quiz.columns == 4) {
                 $rootScope.quiz.answers[0].push($rootScope.quiz.answers4);
+                totalQuestions = totalQuestions +  $rootScope.quiz.answers4.length;
                 if (isTwoRows) {
+                    totalQuestions = totalQuestions +  $rootScope.quiz.answers8.length;
                     $rootScope.quiz.answers[1].push($rootScope.quiz.answers8);
                 }
             }
@@ -138,6 +195,7 @@
             $rootScope.quiz.questions = [];
             var isTwoRows = false;
             $rootScope.quiz.questions.push([]);
+
             if ($rootScope.quiz.rows == 2) {
                 $rootScope.quiz.questions.push([]);
                 isTwoRows = true;

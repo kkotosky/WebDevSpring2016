@@ -1,7 +1,6 @@
 module.exports = function(app, model) {
     app.post("/api/project/user", createUser);
     app.get("/api/project/user", findUsersHandler);
-    app.get("/api/project/user/:id", findById);
     app.put("/api/project/user/:id", updateUser);
     app.delete("/api/project/user/:id", deleteUser);
 
@@ -41,14 +40,6 @@ module.exports = function(app, model) {
         });
 
     }
-    function findById(req, res) {
-        var id = req.params.id;
-        model.findById(id).then(function(resp){
-            res.json(resp);
-        },function(e){
-            res.status(404).send(e);
-        });
-    }
     function findByUserCredentials(req, res, uname, pword) {
         model.findByUserCredentials(uname, pword).then(function(resp){
             res.json(resp);
@@ -67,7 +58,7 @@ module.exports = function(app, model) {
     }
     function deleteUser(req, res) {
         var id = req.params.id;
-        model.deleteUser(id).then(function(resp){
+        model.deleteUserById(id).then(function(resp){
             res.json(resp);
         },function(e){
             res.status(400).send(e);

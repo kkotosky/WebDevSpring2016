@@ -1,4 +1,4 @@
-<div class="container-fluid" ng-controller="RegisterController">
+<div class="container-fluid" ng-controller="RegisterController" ng-if="loggedIn">
     <div class="row">
         <div class="col-md-10 main">
             <h1>Welcome {{currentUser.firstName}} {{currentUser.lastName}},</h1><br>
@@ -8,15 +8,15 @@
     <div class="row">
         <div class="col-md-4 main">
             <h2>Tests Taken</h2><br>
-            <span class="stat_span"> 45 </span>
+            <span class="stat_span"> {{stats.gamesPlayed}} </span>
         </div>
         <div class="col-md-4 main">
             <h2>Average Score</h2><br>
-            <span class="stat_span">75.6%</span>
+            <span class="stat_span">{{stats.average}}</span>
         </div>
         <div class="col-md-4 main">
             <h2>Last Played Date</h2><br>
-            <span class="stat_span">5/1/16</span>
+            <span class="stat_span">{{stats.lastPlayed}}</span>
         </div>
     </div>
     <div class="row">

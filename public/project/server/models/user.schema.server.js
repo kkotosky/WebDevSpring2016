@@ -7,9 +7,8 @@ module.exports = function(mongoose) {
         firstName:String,
         lastName:String,
         emails:[String],
-        _id:String,
-        phones:[String]
-    }, {collection: 'assignment.user'});
+        _id:String
+    }, {collection: 'project.user'});
 
     return UserSchema;
 };

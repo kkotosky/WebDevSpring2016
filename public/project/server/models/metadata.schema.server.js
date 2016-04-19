@@ -3,9 +3,8 @@ module.exports = function(mongoose) {
     var MetaQuizSchema = mongoose.Schema({
         title: String,
         _id: String,
-        creator: String,
+        createdBy: String,
         description: String
     }, {collection: 'project.metaQuizzes'});
-
     return MetaQuizSchema;
 };

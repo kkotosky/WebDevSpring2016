@@ -1,7 +1,7 @@
 <div class="container-fluid col-sm-offset-1">
     <div class="row quiz_title">
         <h2> {{quiz.title}} </h2>
-        <button class="give_up_button pull-right" ng-click="giveUp()">Give Up!!</button>
+        <button class="give_up_button pull-right" ng-click="endTheGame()">Give Up!!</button>
     </div>
     <div class="row" ng-if="!quiz.multi">
         <h3> {{quiz.question}} </h3>
