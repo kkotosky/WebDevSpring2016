@@ -1,4 +1,4 @@
 (function(){
     angular
-        .module("KevinSporcleApp", ["ngRoute"]);
+        .module("KevinSporcleApp", ["ngRoute", "ngCookies"]);
 })();

@@ -1,7 +1,8 @@
 module.exports = function(app, model) {
     app.get("/api/project/quizzes/full/:quizId", getFullQuiz);
     app.post("/api/project/quizzes/full", makeFullQuiz);
-
+    app.put("/api/project/quizzes/full", updateFullQuiz);
+    app.delete("/api/project/quizzes/full/:id", deleteFullQuiz);
     function generateUUID() {
         function s4() {
             return Math.floor((1 + Math.random()) * 0x10000)
@@ -17,7 +18,7 @@ module.exports = function(app, model) {
         model.getFullQuiz(id).then(function(resp){
             res.json(resp);
         }, function (e) {
-            res.status(404).send(e);
+            res.status(503).send(e);
         });
     }
 
@@ -27,7 +28,25 @@ module.exports = function(app, model) {
         model.makeFullQuiz(quiz).then(function(resp){
             res.json(resp);
         }, function (e) {
-            res.status(404).send(e);
+            res.status(503).send(e);
+        });
+    }
+
+    function updateFullQuiz(req, res) {
+        var quiz = req.body;
+        model.updateQuiz(quiz).then(function(resp){
+            res.json(resp);
+        }, function (e) {
+            res.status(503).send(e);
+        });
+    }
+
+    function deleteFullQuiz(req, res) {
+        var quizId = req.params.id;
+        model.deleteFullQuiz(quizId).then(function(resp){
+            res.json(resp);
+        }, function (e) {
+            res.status(503).send(e);
         });
     }
 

@@ -88,10 +88,15 @@ module.exports = function(db, mongoose) {
 
     function updateUser(userId, user) {
         var def = q.defer();
-        userModel.update({_id:userId}, user , function (err, doc) {
+        userModel.findOne({_id:userId}, user , function (err, doc) {
             if (err) {
                 def.reject(err);
             } else {
+                doc.password = user.password;
+                doc.firstName = user.firstName;
+                doc.lastName = user.lastName;
+                doc.email = user.email;
+                doc.save();
                 def.resolve(doc);
             }
         });

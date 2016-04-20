@@ -2,17 +2,17 @@
     <nav class="navbar navbar-inverse navbar-fixed-top">
         <div class="container-fluid">
             <div class="navbar-header">
-                <a class="navbar-brand" href="#/">Kevin's Sporcle Thingy!</a>
+                <a class="navbar-brand" href="#/">Kevin Kotosky's Final Project!</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
                     <li><input ng-model="search.text" type="text" placeholder="Search..."></li>
                     <li><a ng-if="search.text" href="#/search?search={{search.text}}">Go!</a></li>
-                    <li ng-if="loggedIn"><a href="#/create">Create Quiz</a></li>
+                    <li ng-if="loggedIn && currentUser.admin"><a href="#/create">Create Quiz</a></li>
                     <li><a href="#/home">Home</a></li>
                     <li ng-if="loggedIn"><a href="#/profile">{{currentUser.username}}</a></li>
                     <li ng-if="loggedIn"><a href="#/editprofile">Edit Profile</a></li>
-                    <li ng-if="loggedIn && admin">Manage Site</li>
+                    <li ng-if="loggedIn && currentUser.admin"><a href="#/admin">Manage Site</a></li>
                     <li ng-if="loggedIn"> <a href="#/home" ng-click="logout()">Logout</a></li>
                     <li ng-if="!loggedIn"><a href="#/register">Login/Register</a></li>
                 </ul>

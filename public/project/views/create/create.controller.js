@@ -3,9 +3,21 @@
         .module("KevinSporcleApp")
         .controller("CreateController", CreateController);
 
-    function CreateController($location, $rootScope, QuizService) {
+    function CreateController($location, $rootScope, QuizService, $cookies) {
+
         if (!$rootScope.loggedIn) {
-            $location.url("/register")
+            $rootScope.loggedIn = $cookies.get("loggedIn");
+            $rootScope.currentUser = {
+                username : $cookies.get("username"),
+                firstName : $cookies.get("firstName"),
+                lastName : $cookies.get("lastName"),
+                email : $cookies.get("email"),
+                _id : $cookies.get("id"),
+                admin : $cookies.get("admin")
+            };
+            if (!$rootScope.loggedIn) {
+                $location.url("/register");
+            }
         }
         $rootScope.numAnswers = [[[0],[0],[0],[0]], [[0],[0],[0],[0]]];
         $('#question_type').val("single");
@@ -158,7 +170,6 @@
         $rootScope.finishQuiz = function(){
             var questions = getQuestions();
             var answers = gatherAnswers();
-            console.log($rootScope);
             var quiz = {
                 title : $rootScope.create.title,
                 createdBy: $rootScope.currentUser._id,
@@ -188,7 +199,7 @@
             console.log(quiz);
             QuizService.makeFullQuiz(quiz).then(function(resp){
                 QuizService.makeMetaQuizzes(getMetadata(resp.data)).then(function(resp) {
-                    window.alert("Successful Creation!");
+                    $location.url("/profile");
                 }, function(err){
                     window.alert("Failed To Create");
                 });

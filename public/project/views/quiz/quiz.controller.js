@@ -3,13 +3,24 @@
         .module("KevinSporcleApp")
         .controller("QuizController", QuizController);
 
-    function QuizController($location, $rootScope, QuizService, $routeParams, UserStatsService) {
+    function QuizController($location, $rootScope, QuizService, $routeParams, UserStatsService, $cookies) {
         var id = $routeParams.quizId;
         var totalAnswered = 0;
         var totalQuestions = 0;
         $rootScope.numRows = 0;
         $rootScope.numCols = 0;
         $rootScope.input = {answer:""};
+        if (!$rootScope.loggedIn) {
+            $rootScope.loggedIn = $cookies.get("loggedIn");
+            $rootScope.currentUser = {
+                username : $cookies.get("username"),
+                firstName : $cookies.get("firstName"),
+                lastName : $cookies.get("lastName"),
+                email : $cookies.get("email"),
+                _id : $cookies.get("id"),
+                admin : $cookies.get("admin")
+            };
+        }
         QuizService.getFullQuiz(id).then(function(resp){
             $rootScope.quiz = resp.data[0];
             convertQuizzesToArrays();
@@ -102,10 +113,12 @@
             window.alert("You Scored: " + ((totalAnswered/totalQuestions) * 100));
         };
         editPriorQuizzes= function(pQuizzes) {
-            if (pQuizzes.length > 2) {
-                pQuizzes.slice(0,1);
+            if (!(pQuizzes.indexOf($rootScope.quiz._id) >= 0)) {
+                if (pQuizzes.length > 2) {
+                    pQuizzes.slice(0,1);
+                }
+                pQuizzes.push($rootScope.quiz._id);
             }
-            pQuizzes.push($rootScope.quiz._id);
             return pQuizzes;
         };
         getAverage = function(currentAve, gamesPlayed){

@@ -1,9 +1,11 @@
 module.exports = function(app, model) {
     app.get("/api/project/quizzes/meta/popular", getPopQuizzes);
+    app.get("/api/project/quizzes/meta/all", getMetaQuizzes);
     app.get("/api/project/quizzes/meta/user/:id", getUserQuizzes);
     app.get("/api/project/quizzes/meta/:quizId", getQuiz);
     app.get("/api/project/quizzes/meta/search/:searchText", searchQuizzes);
     app.post("/api/project/quizzes/meta", makeMetaQuizzes);
+    app.put("/api/project/quizzes/meta", updateMetaQuiz);
 
     function generateUUID() {
         function s4() {
@@ -17,7 +19,13 @@ module.exports = function(app, model) {
 
     function getPopQuizzes(req, res) {
         model.getPopQuizzes().then(function(resp){
-            console.log(resp);
+            res.json(resp);
+        }, function (e) {
+            res.status(404).send(e);
+        });
+    }
+    function getMetaQuizzes(req, res) {
+        model.getMetaQuizzes().then(function(resp){
             res.json(resp);
         }, function (e) {
             res.status(404).send(e);
@@ -27,7 +35,6 @@ module.exports = function(app, model) {
     function getUserQuizzes(req, res) {
         var id = req.params.id;
         model.getUserQuizzes(id).then(function(resp){
-            console.log(resp);
             res.json(resp);
         }, function (e) {
             res.status(404).send(e);
@@ -37,7 +44,15 @@ module.exports = function(app, model) {
     function getQuiz(req, res) {
         var id = req.params.quizId;
         model.getQuiz(id).then(function(resp){
-            console.log(resp);
+            res.json(resp);
+        }, function (e) {
+            res.status(404).send(e);
+        });
+    }
+
+    function updateMetaQuiz(req, res) {
+        var quiz = req.body;
+        model.updateMetaQuiz(quiz).then(function(resp){
             res.json(resp);
         }, function (e) {
             res.status(404).send(e);

@@ -36,6 +36,14 @@
                 templateUrl: "views/quiz/quiz.view.html",
                 controller:  "QuizController"
             })
+            .when("/admin", {
+                templateUrl: "views/admin/admin.view.html",
+                controller:  "AdminController"
+            })
+            .when("/edit", {
+                templateUrl: "views/edit/edit.view.html",
+                controller:  "EditController"
+            })
         ;
     }
 })();

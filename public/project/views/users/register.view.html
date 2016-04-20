@@ -45,8 +45,14 @@
                     <div class="form-group">
                         <label for="input_email" class="col-sm-2 control-label">Email</label>
                         <div class="col-sm-10">
-                            <input ng-model= "nuser.email"
+                            <input ng-model="nuser.email"
                                    type="email" class="form-control" id="input_email" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="login_password" class="col-sm-2 control-label">Admin Privileges</label>
+                        <div class="col-sm-10">
+                            <input type="checkbox" ng-model="nuser.admin" value="true" checked/>
                         </div>
                     </div>
                     <div class="form-group">

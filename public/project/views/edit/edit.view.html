@@ -1,58 +1,59 @@
-<div class="container-fluid col-sm-offset-1" ng-if="loggedIn">
+<div class="container-fluid col-sm-offset-1" ng-if="loggedIn && edit.createdBy == currentUser._id ">
     <div class="row">
         <h2 class=>Quiz Creation</h2>
     </div>
     <div class="row">
         <div class="col-md-3">
             <label for="quiz_title">Quiz Title: </label> <br>
-            <input id="quiz_title" type="text" placeholder="Title..." ng-model="create.title"/>
+            <input id="quiz_title" type="text" placeholder="Title..." ng-model="edit.title"/>
         </div>
         <div class="col-md-3">
             <label for="quiz_title">Type of Quiz </label> <br>
-            <select id="question_type" ng-model="create.questionType">
+            <select id="question_type" ng-model="edit.questionType">
                 <option selected value="single">Single Question</option>
                 <option value="multi">Multiple Questions</option>
             </select>
         </div>
     </div>
     <div class="row">
-        <div class="col-md-3" ng-if="create.questionType === 'single'">
+        <div class="col-md-3" ng-if="edit.questionType === 'single'">
             <label for="single_question">Enter Question: </label> <br>
-            <input id="single_question" type="text" placeholder="Question..." ng-model="create.singleQuestion"/>
+            <input id="single_question" type="text" placeholder="Question..." ng-model="edit.question"/>
         </div>
         <div class="col-md-3 ">
             <label for="num_columns">Number of Columns: </label> <br>
             <input id="num_columns" class="ng-valid" type="text" placeholder="1,2,3 or 4"
-                   ng-change="numColsChange()" ng-model="create.numCols"/>
+                   ng-change="numColsChange()" ng-model="edit.columns"/>
         </div>
         <div class="col-md-3 ">
             <label for="num_rows">Number of Rows: </label> <br>
             <input id="num_rows" class="ng-valid" type="text" placeholder="1 or 2"
-                   ng-change="numRowsChange()" ng-model="create.numRows"/>
+                   ng-change="numRowsChange()" ng-model="edit.rows"/>
         </div>
         <div class="col-md-3 ">
-            <button class="finish_quiz" ng-click="finishQuiz()">Finish Quiz!</button>
+            <button class="finish_quiz" ng-click="updateQuiz()">Update Quiz!</button>
         </div>
     </div>
     <div class="row view_container">
         <div class="col-md-3">
             <textarea id="quiz_description" type="text"
-                   placeholder="Place Description Here..." ng-model="create.quizDescription"/>
+                      placeholder="Place Description Here..." ng-model="edit.description"/>
         </div>
     </div>
     <div class="row {{getCreateBorderClasses(1)}} border-top">
         <h2> Quiz Builder: </h2>
-        <div ng-if="create.numRows == '1' || create.numRows == '2'"
+        <div ng-if="edit.rows === 1 || edit.rows === 2"
              ng-class="$parent.$index % 2 == 1 ? 'even-column' : ''"
-            class="create_quiz_columns {{getColumnSpacing(create.numCols)}}" ng-repeat="i in getNumColumns() track by $index">
-            <input type="text" placeholder="Section Label" class="section_label">
+             class="create_quiz_columns {{getColumnSpacing(edit.columns)}}" ng-repeat="i in getNumColumns() track by $index">
+            <input type="text" placeholder="Section Label" class="section_label" value="{{edit.headers[$index]}}">
             <div>
-                <div class="create_answers answer_inputs"
-                     ng-repeat="j in numAnswers[0][$parent.$index] track by $index">
+                <div class="create_answers answer_inputs" ng-repeat="j in edit.answers[0][$index] track by $index">
                     <div class="row">
                         <label> {{$index +1}}.</label> <br>
-                        <input ng-if="create.questionType=='multi'" type="text" class="question_input" placeholder="Question...">
-                        <input type="text" placeholder="Answer..." class="answer_input">
+                        <input ng-if="edit.questionType=='multi'" value="{{edit.questions[0][$parent.$index][$index]}}"
+                               type="text" class="question_input" placeholder="Question...">
+                        <input type="text" placeholder="Answer..." value="{{j}}"
+                               class="answer_input">
                     </div>
                 </div>
                 <div class="row create_answers">
@@ -64,15 +65,17 @@
     </div>
 
     <div class="row {{getCreateBorderClasses(2)}}">
-        <div ng-if="create.numRows == '2'"
+        <div ng-if="edit.rows == 2"
              ng-class="$parent.$index % 2 == 1 ? 'even-column' : ''"
-             class="create_quiz_columns {{getColumnSpacing(create.numCols)}}" ng-repeat="i in getNumColumns() track by $index">
-            <input type="text" placeholder="Section Label" class="section_label">
-            <div class="create_answers answer_inputs" ng-repeat="j in numAnswers[1][$parent.$index] track by $index">
+             class="create_quiz_columns {{getColumnSpacing(edit.columns)}}" ng-repeat="i in getNumColumns() track by $index">
+            <input type="text" placeholder="Section Label" class="section_label"
+                   value="{{edit.headers[edit.columns+$index]}}">
+            <div class="create_answers answer_inputs" ng-repeat="j in edit.answers[1][$index] track by $index">
                 <div class ="row">
                     <label> {{$index +1}}.</label><br>
-                    <input ng-if="create.questionType=='multi'" class="question_input" type="text" placeholder="Question...">
-                    <input type="text" class="answer_input" placeholder="Answer...">
+                    <input ng-if="edit.questionType=='multi'" value="{{edit.questions[1][$parent.$index][$index]}}"
+                           class="question_input" type="text" placeholder="Question...">
+                    <input type="text" class="answer_input" placeholder="Answer..." value="{{j}}">
                 </div>
             </div>
             <div class="row create_answers">

@@ -1,0 +1,21 @@
+<div class="container-fluid col-sm-offset-1" ng-if="loggedIn">
+    <div class="row">
+        Admin Duties: Determine which games are "Popular"
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <h3> Not Popular Quizzes </h3>
+            <div ng-repeat="metaQuiz in meta.quizzes track by $index" class="quiz_admin">
+                <button ng-click="addToPopular(metaQuiz)"> Add to Popular </button>
+                <span> {{metaQuiz.title}} </span>
+            </div>
+        </div>
+        <div class="row col-md-6">
+            <h3>Popular Quizzes </h3>
+            <div ng-repeat="popQuiz in meta.popQuizzes track by $index" class="quiz_admin">
+                <button ng-click="removeFromPopular(popQuiz)"> Remove from Popular</button>
+                <span> {{popQuiz.title}} </span>
+            </div>
+        </div>
+    </div>
+</div>

@@ -3,9 +3,20 @@
         .module("KevinSporcleApp")
         .controller("EditProfileController", EditProfileController);
 
-    function EditProfileController($location, $rootScope, UserService) {
+    function EditProfileController($location, $rootScope, UserService, $cookies) {
         if (!$rootScope.loggedIn) {
-            $location.url("/register");
+            $rootScope.loggedIn = $cookies.get("loggedIn");
+            $rootScope.currentUser = {
+                username : $cookies.get("username"),
+                firstName : $cookies.get("firstName"),
+                lastName : $cookies.get("lastName"),
+                email : $cookies.get("email"),
+                _id : $cookies.get("id"),
+                admin : $cookies.get("admin"),
+            };
+            if (!$rootScope.loggedIn) {
+                $location.url("/register");
+            }
         } else {
             var model = this;
             console.log($rootScope.currentUser);

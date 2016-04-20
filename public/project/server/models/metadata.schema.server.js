@@ -4,7 +4,8 @@ module.exports = function(mongoose) {
         title: String,
         _id: String,
         createdBy: String,
-        description: String
+        description: String,
+        popular:Boolean
     }, {collection: 'project.metaQuizzes'});
     return MetaQuizSchema;
 };
