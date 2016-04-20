@@ -9,55 +9,78 @@
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular-route.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+    <link href="./project/css/home-style.css" rel="stylesheet" />
     <style>
         .link-content {
             padding-top:50px;
         }
     </style>
 </head>
-<body ng-controller="MainController">
-<div ng-include="'./views/header/header.view.html'"></div>
-<div class="container-fluid view_container">
-    <div>
-        <nav class="navbar navbar-inverse navbar-fixed-top">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#/">Landing Page</a>
-                </div>
-                <div id="navbar" class="navbar-collapse collapse">
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="assignment/">Assignments</a></li>
-                        <li><a href="project/">Project Proof of Concept</a></li>
+    <body class="landing" ng-controller="MainController">
+    <div class="container-fluid view_container">
+        <div class="navbar navbar-inverse navbar-fixed-top " >
+            <div class="container">
+                <div class="navbar-collapse collapse move-me">
+                    <ul class="nav navbar-nav navbar-right set-links">
+                        <li><a href="" class="active-menu-item">Home</a></li>
+                        <li><a href="project/">Project</a></li>
+                        <li><a href="assignment/">Assignment</a></li>
                         <li>
-                            <a
-                            href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
-                            Project Proposal</a>
+                            <a href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
+                                Project Proof of Concept
+                            </a>
                         </li>
+                        <li><a href="">Project Video (coming soon)</a></li>
                     </ul>
                 </div>
-            </div>
-        </nav>
-    </div>
-    <div class="container-fluid link-content">
-        <div class="row padding-top">
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">Assignment Link</h1>
-                <div class="row ">
-                    <a href="assignment/">Click Here for Assignment Link</a>
-                </div>
-                <h1 class="page-header">Project Links</h1>
-                <div class="row ">
-                    <a href="project/">Click Here for Project Proof of Concept</a>
-                    <br>Credentials: <br>
-                    username:nightwing <br>
-                    password:nightwing<br>
-                    <a href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
-                        Click here to go to Project Proposal</a>
-                </div>
+
             </div>
         </div>
+        <!--MENU SECTION END-->
+        <section id="home-sec">
+            <div class="overlay text-center">
+                <h1 >Kevin Kotosky Web Development Spring 2016</h1>
+                <hr class="hr-set"/>
+                <p>Complete with links to Project and Assignments</p>
+            </div>
+        </section>
+
+        <!--SEARCH SECTION END-->
+        <section id="services-sec">
+            <div class="container">
+
+                <div class="row text-center" >
+                    <div class="col-md-3">
+                        <h3>Assignment</h3>
+                        <a href="assignment/">Click here to go to the assignments</a>
+
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Project</h3>
+                        <a href="project/">
+                            Click here to go to my final project
+                        </a>
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Proof of Concept</h3>
+                        <a href="https://docs.google.com/document/d/1IPeSd41hlnzQUdfZgLRIv5wbc7XG01MD7xnh16_WJLg">
+                            Click here to go to my proof of concept
+                            </a>
+                    </div>
+                    <div class="col-md-3">
+                        <h3>Project Video</h3>
+                        <a href="">
+                            Will Be available on 4/20/2016
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div><br>
+                <br>
+                <span class="citation">Template for homepage taken from http://www.free-css.com/free-css-templates/page196/it-host#shout</span>
+            </div>
+        </section>
     </div>
-</div>
 </body>
 
 </html>
