@@ -111,6 +111,7 @@
                 });
             }
             window.alert("You Scored: " + ((totalAnswered/totalQuestions) * 100));
+            $location.url("/profile");
         };
         editPriorQuizzes= function(pQuizzes) {
             if (!(pQuizzes.indexOf($rootScope.quiz._id) >= 0)) {

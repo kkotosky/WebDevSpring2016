@@ -206,6 +206,7 @@
                     QuizService.updateFullQuiz(quiz).then(function(resp){
                         QuizService.updateMetaQuiz(getMetadata(resp.data)).then(function(resp) {
                             window.alert("Successful Update!");
+                            $location.url("/profile");
                         }, function(err){
                             window.alert("Failed To update");
                         });

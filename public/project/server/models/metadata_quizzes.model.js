@@ -87,7 +87,6 @@ module.exports = function(db, mongoose) {
 
     function updateMetaQuiz (metaUpdate) {
         var def = q.defer();
-
         metaQuizModel.findOne({_id:metaUpdate._id}, function (err, doc) {
             if (err) {
                 def.reject(err);
