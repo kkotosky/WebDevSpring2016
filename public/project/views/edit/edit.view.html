@@ -73,7 +73,7 @@
             <div class="create_answers answer_inputs" ng-repeat="j in edit.answers[1][$index] track by $index">
                 <div class ="row">
                     <label> {{$index +1}}.</label><br>
-                    <input ng-if="edit.questionType=='multi'" value="{{edit.questions[1][$parent.$index][$index]}}"
+                    <input ng-if="edit.questionType=='multi'" value="{{edit.questions[1][$parent.$parent.$index][$index]}}"
                            class="question_input" type="text" placeholder="Question...">
                     <input type="text" class="answer_input" placeholder="Answer..." value="{{j}}">
                 </div>
