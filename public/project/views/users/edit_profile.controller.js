@@ -20,7 +20,6 @@
         } else {
             var model = this;
             console.log($rootScope.currentUser);
-            $rootScope.updateUser = updateUser;
             function updateUser(user) {
                 UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser).then(function (upUser) {
                     if (upUser) {
