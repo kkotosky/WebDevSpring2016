@@ -23,10 +23,11 @@
         <div class="col-md-6 main">
             <h2>Your Quizzes</h2><br>
             <table class="list_quizzes">
-                <tr ng-repeat="quiz in userQuizzes">
-                    <td ng-click="takeQuiz(quiz)">
+                <tr ng-repeat="quiz in userQuizzes track by $index">
+                    <td>
                         <span class="glyphicon glyphicon-pencil pull-right" ng-click="editQuiz(quiz)"></span>
-                        <span>{{quiz.title}}</span><br>
+                        <span class="glyphicon delete-icon glyphicon-remove pull-right" ng-click="deleteQuiz(quiz, $index)"></span>
+                        <span class="pointer" ng-click="takeQuiz(quiz)">{{quiz.title}}</span><br>
                         <span class="quiz_description">{{quiz.description}}</span>
                     </td>
                 </tr>
@@ -36,8 +37,8 @@
             <h2>Prior Quizzes</h2><br>
             <table class="list_quizzes">
                 <tr ng-repeat="quiz in priorQuizzes" >
-                    <td ng-click="takeQuiz(quiz)">
-                        <span>{{quiz.title}}</span><br>
+                    <td>
+                        <span class="pointer" ng-click="takeQuiz(quiz)">{{quiz.title}}</span><br>
                         <span class="quiz_description">{{quiz.description}}</span>
                     </td>
                 </tr>

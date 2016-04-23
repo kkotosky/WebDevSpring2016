@@ -9,6 +9,7 @@
         $rootScope.register = register;
         function login (user) {
             UserService.findUserByCredentials(user.username, user.password).then(function(userInfo){
+                console.log(userInfo);
                 if (userInfo.data[0] != null) {
                     console.log(userInfo);
                     $rootScope.currentUser = userInfo.data[0];

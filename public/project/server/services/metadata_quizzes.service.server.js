@@ -3,6 +3,7 @@ module.exports = function(app, model) {
     app.get("/api/project/quizzes/meta/all", getMetaQuizzes);
     app.get("/api/project/quizzes/meta/user/:id", getUserQuizzes);
     app.get("/api/project/quizzes/meta/:quizId", getQuiz);
+    app.delete("/api/project/quizzes/meta/:quizId", deleteMetaQuiz);
     app.get("/api/project/quizzes/meta/search/:searchText", searchQuizzes);
     app.post("/api/project/quizzes/meta", makeMetaQuizzes);
     app.put("/api/project/quizzes/meta", updateMetaQuiz);
@@ -26,6 +27,14 @@ module.exports = function(app, model) {
     }
     function getMetaQuizzes(req, res) {
         model.getMetaQuizzes().then(function(resp){
+            res.json(resp);
+        }, function (e) {
+            res.status(404).send(e);
+        });
+    }
+    function deleteMetaQuiz(req, res) {
+        var id = req.params.quizId;
+        model.deleteMetaQuizzes(id).then(function(resp){
             res.json(resp);
         }, function (e) {
             res.status(404).send(e);

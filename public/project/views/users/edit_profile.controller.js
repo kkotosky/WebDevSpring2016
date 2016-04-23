@@ -17,10 +17,11 @@
             if (!$rootScope.loggedIn) {
                 $location.url("/register");
             }
-        } else {
+        }
+        if ($rootScope.loggedIn) {
             var model = this;
             console.log($rootScope.currentUser);
-            function updateUser(user) {
+            $rootScope.updateUser = function(user) {
                 UserService.updateUser($rootScope.currentUser._id, $rootScope.currentUser).then(function (upUser) {
                     if (upUser) {
                         $rootScope.currentUser = upUser.data;

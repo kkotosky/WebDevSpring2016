@@ -9,8 +9,8 @@ module.exports = function(db, mongoose) {
         getQuiz: getQuiz,
         searchQuizzes:searchQuizzes,
         makeMetaQuizzes:makeMetaQuizzes,
-        updateMetaQuiz : updateMetaQuiz
-
+        updateMetaQuiz : updateMetaQuiz,
+        deleteMetaQuizzes:deleteMetaQuizzes
     };
     var metaQuizSchema = require('./metadata.schema.server.js')(mongoose);
     var metaQuizModel = mongoose.model("MetaQuiz", metaQuizSchema);
@@ -21,6 +21,17 @@ module.exports = function(db, mongoose) {
         var def = q.defer();
         quiz.popular = false;
         metaQuizModel.create(quiz, function (err, doc) {
+            if (err) {
+                def.reject(err);
+            } else {
+                def.resolve(doc);
+            }
+        });
+        return def.promise;
+    }
+    function deleteMetaQuizzes(id) {
+        var def = q.defer();
+        metaQuizModel.remove({_id:id}, function (err, doc) {
             if (err) {
                 def.reject(err);
             } else {

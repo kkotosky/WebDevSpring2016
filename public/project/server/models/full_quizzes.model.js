@@ -39,9 +39,9 @@ module.exports = function(db, mongoose) {
         return def.promise;
     }
 
-    function deleteFullQuiz(quiz) {
+    function deleteFullQuiz(id) {
         var def = q.defer();
-        fQuizModel.create(quiz, function (err, doc) {
+        fQuizModel.remove({_id: id}, function (err, doc) {
             if (err) {
                 def.reject(err);
             } else {

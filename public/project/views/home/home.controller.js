@@ -27,6 +27,14 @@
         $rootScope.editQuiz = function (quiz) {
             $location.url("/edit?quizId="+quiz._id);
         };
+        $rootScope.deleteQuiz = function (quiz, i) {
+            QuizService.deleteFullQuiz(quiz._id).then(function(resp){
+                QuizService.deleteMetaQuiz(quiz._id).then(function(resp){
+                    window.alert('Quiz deleted');
+                    $rootScope.userQuizzes.splice(i ,1);
+                });
+            });
+        };
         $rootScope.logout = function(){
             $rootScope.currentUser = {};
             $rootScope.loggedIn = false;

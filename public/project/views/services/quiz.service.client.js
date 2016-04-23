@@ -14,7 +14,9 @@
             makeFullQuiz: makeFullQuiz,
             updateFullQuiz: updateFullQuiz,
             makeMetaQuizzes: makeMetaQuizzes,
-            updateMetaQuiz:updateMetaQuiz
+            updateMetaQuiz:updateMetaQuiz,
+            deleteFullQuiz:deleteFullQuiz,
+            deleteMetaQuiz:deleteMetaQuiz
         };
         return api;
 
@@ -36,6 +38,9 @@
         function getFullQuiz(id) {
             return $http.get("/api/project/quizzes/full/"+id);
         }
+        function deleteFullQuiz(id) {
+            return $http.delete("/api/project/quizzes/full/"+id);
+        }
         function makeFullQuiz(quiz) {
             return $http.post("/api/project/quizzes/full", quiz);
         }
@@ -44,6 +49,10 @@
         }
         function makeMetaQuizzes(metaQuiz) {
             return $http.post("/api/project/quizzes/meta", metaQuiz);
+        }
+        function deleteMetaQuiz(id) {
+            console.log(id);
+            return $http.delete("/api/project/quizzes/meta/"+id);
         }
         function updateMetaQuiz(metaQuiz) {
             return $http.put("/api/project/quizzes/meta", metaQuiz);
