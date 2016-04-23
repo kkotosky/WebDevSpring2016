@@ -9,7 +9,8 @@
         $rootScope.register = register;
         function login (user) {
             UserService.findUserByCredentials(user.username, user.password).then(function(userInfo){
-                if (userInfo[0] != null) {
+                if (userInfo.data[0] != null) {
+                    console.log(userInfo);
                     $rootScope.currentUser = userInfo.data[0];
                     $rootScope.loggedIn = true;
                     $cookies.put("id", $rootScope.currentUser._id);
@@ -21,6 +22,7 @@
                     $cookies.put("admin", $rootScope.currentUser.admin);
                     $location.url("/profile");
                 } else {
+                    console.log(userInfo+"asdasd");
                     window.alert("Username / password combo does not exist");
                 }
             })

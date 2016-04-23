@@ -12,7 +12,7 @@
                 lastName : $cookies.get("lastName"),
                 email : $cookies.get("email"),
                 _id : $cookies.get("id"),
-                admin : $cookies.get("admin"),
+                admin : $cookies.get("admin")
             };
             if (!$rootScope.loggedIn) {
                 $location.url("/register");

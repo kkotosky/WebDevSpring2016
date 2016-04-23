@@ -106,12 +106,12 @@
                     data.gamesPlayed = data.gamesPlayed + 1;
                     data.priorQuizzes = editPriorQuizzes(data.priorQuizzes);
                     UserStatsService.updateStats($rootScope.currentUser.username, data).then(function(resp){
-                        window.alert("Your Stats have been updated")
+                        window.alert("Your Stats have been updated");
+                        $location.url("/profile");
                     });
                 });
             }
             window.alert("You Scored: " + ((totalAnswered/totalQuestions) * 100));
-            $location.url("/profile");
         };
         editPriorQuizzes= function(pQuizzes) {
             if (!(pQuizzes.indexOf($rootScope.quiz._id) >= 0)) {
