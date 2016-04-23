@@ -34,7 +34,9 @@
                 $rootScope.stats.priorQuizzes = data.priorQuizzes;
                 for (var i = 0; i < $rootScope.stats.priorQuizzes.length; i++) {
                     QuizService.getQuiz($rootScope.stats.priorQuizzes[i]).then(function(resp){
-                       $rootScope.priorQuizzes.push(resp.data[0]);
+                        if (resp.data[0]!= null) {
+                            $rootScope.priorQuizzes.push(resp.data[0]);
+                        }
                     });
                 }
             });
