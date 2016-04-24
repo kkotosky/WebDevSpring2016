@@ -1,9 +1,42 @@
+var passport = require('passport');
+var LocalStrategy  = require('passport-local').Strategy;
+//var GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
+var mongoose       = require("mongoose");
 module.exports = function(app, model) {
+
+    var auth = authorized;
+
+    app.post('/api/assignment/login', passport.authenticate('local'),login);
+    app.post('/api/assignment/logout', logout);
+    app.post('/api/assignment/register', register);
+    app.get('/api/assignment/loggedin', loggedin);
+    app.get('/api/assignment/user',  auth, findAllUsers);
     app.post("/api/assignment/user", createUser);
-    app.get("/api/assignment/user", findUsersHandler);
     app.get("/api/assignment/user/:id",findById);
-    app.put("/api/assignment/user/:id",updateUser);
-    app.delete("/api/assignment/user/:id",deleteUser);
+    app.put("/api/assignment/user/:id", auth, updateUser);
+    app.delete("/api/assignment/user/:id", auth, deleteUser);
+   // app.get   ('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
+    /*app.get   ('/auth/google/callback',
+        passport.authenticate('google', {
+                successRedirect: '/#/profile',
+            failureRedirect: '/#/login'
+    }));*/
+
+    var googleConfig = {
+        clientID        : process.env.GOOGLE_CLIENT_ID,
+        clientSecret    : process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL     : process.env.GOOGLE_CALLBACK_URL
+    };
+    var facebookConfig = {
+                clientID        : process.env.FACEBOOK_CLIENT_ID,
+                clientSecret    : process.env.FACEBOOK_CLIENT_SECRET,
+                callbackURL     : process.env.FACEBOOK_CALLBACK_URL
+        };
+
+    //passport.use(new GoogleStrategy(googleConfig, googleStrategy));
+    passport.serializeUser(serializeUser);
+    passport.deserializeUser(deserializeUser);
+    passport.use(new LocalStrategy(localStrategy));
 
     function generateUUID() {
         function s4() {
@@ -27,6 +60,131 @@ module.exports = function(app, model) {
         }
     }
 
+    function localStrategy(username, password, done) {
+        model
+            .findByUserCredentials(username, password)
+            .then(
+                function(user) {
+                    if (!user) { return done(null, false); }
+                    return done(null, user);
+                },
+                function(err) {
+                    if (err) { return done(err); }
+                }
+            );
+    }
+    function googleStrategy(token, refreshToken, profile, done) {
+        model
+            .findUserByGoogleId(profile.id)
+            .then(
+                    function(user) {
+                            if(user) {
+                                    return done(null, user);
+                                } else {
+                                    var newGoogleUser = {
+                                            firstName: profile.name.firstName,
+                                            lastName: profile.name.lastName,
+                                            email: profile.emails[0].value,
+                                            google: {
+                                                id: profile.id,
+                                                token: token
+                                            }
+                                    };
+                                    return model.createUser(newGoogleUser);
+                                }
+                        },
+                    function(err) {
+                            if (err) { return done(err); }
+                        }
+                )
+            .then(
+                    function(user){
+                            return done(null, user);
+                        },
+                    function(err){
+                            if (err) { return done(err); }
+                        }
+                );
+    }
+    function serializeUser(user, done) {
+        done(null, user);
+    }
+
+    function deserializeUser(user, done) {
+        model
+            .findById(user._id)
+            .then(
+                function(user){
+                    done(null, user);
+                },
+                function(err){
+                    done(err, null);
+                }
+            );
+    }
+    function register(req, res) {
+        var newUser = req.body;
+        model
+            .findUserByUsername(newUser.username)
+            .then(
+                function(user){
+                    if(user) {
+                        res.json(null);
+                    } else {
+                        model.createUser(newUser);
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            )
+            .then(
+                function(user){
+                    if(user){
+                        req.login(user, function(err) {
+                            if(err) {
+                                res.status(400).send(err);
+                            } else {
+                                res.json(user);
+                            }
+                        });
+                    }
+                },
+                function(err){
+                    res.status(400).send(err);
+                }
+            );
+    }
+    function login(req, res, next) {
+        var user = req.user;
+        res.json(user);
+    }
+
+    function loggedin(req, res) {
+        if(req.isAuthenticated()) {
+            res.send(req.user);
+        } else {
+            res.send('0');
+        }
+    }
+
+    function logout(req, res) {
+        req.logOut();
+        res.send(200);
+    }
+    function isAdmin(user) {
+        if(user.roles.indexOf("admin") >= 0) {
+            return true;
+        }
+        return false;
+    }
+    function authorized (req, res, next) {
+        if (!req.isAuthenticated()) {
+            res.send(401);
+        } else {
+            next();
+        }
+    };
     function createUser(req , res) {
         var user = req.body;
         user._id = generateUUID();
@@ -38,10 +196,21 @@ module.exports = function(app, model) {
 
     }
     function findAllUsers(req, res) {
-        model.findAllUsers().then(function(resp){
-            res.json(resp);
-        });
-
+        console.log("find all users");
+        console.log(req.user);
+        if(isAdmin(req.user)) {
+            model.findAllUsers().then(function(resp){
+                console.log("find all users44");
+                console.log(resp);
+                res.json(resp);
+            }, function(err){
+                console.log("find all users");
+                res.status(400).send(err);
+            });
+        } else {
+            console.log("find all users");
+            res.status(403);
+        }
     }
     function findById(req, res) {
         var id = req.params.id;

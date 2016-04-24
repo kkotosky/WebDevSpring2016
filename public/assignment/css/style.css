@@ -28,3 +28,8 @@ table .glyphicon{
 .clickable {
     cursor:pointer;
 }
+
+.header .glyphicon{
+    margin-top : 5px;
+    margin-left:10px;
+}

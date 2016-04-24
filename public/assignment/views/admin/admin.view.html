@@ -1,46 +1,39 @@
-<div class="container-fluid">
-    <div class="row">
-        
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <h1 class="page-header">Admin</h1>
-            <div class="row ">
-                <form class="form-horizontal">
-                    <table class="table table-hover table-striped table-border">
-                        <tr>
-                            <th><span>Username</span></th>
-                            <th><span>Password</span></th>
-                            <th><span>Role</span></th>
-                            <th><span>Action</span></th>
-                        </tr>
-                        <tr>
-                            <td><input type="text" placeholder="Username"></td>
-                            <td><input type="text" placeholder="Password"></td>
-                            <td><input type="text" placeholder="Role1, Role2"></td>
-                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-ok"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Alice</span></td>
-                            <td><span></span></td>
-                            <td><span>Student</span></td>
-                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Bob</span></td>
-                            <td><span></span></td>
-                            <td><span>Teacher | Admin</span></td>
-                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
-                        </tr>
-                        <tr>
-                            <td><span>Charlie</span></td>
-                            <td><span></span></td>
-                            <td><span></span></td>
-                            <td><span class="glyphicon glyphicon-plus right-spacing"></span><span class="glyphicon glyphicon-pencil"></span></td>
-                        </tr>
+<h1>Admin</h1>
 
-                    </table>
-                </form>
-            </div>
+<h2>User List</h2>
+<table class="table table-striped">
+    <tr class="header">
+        <td>&nbsp;</td>
+        <td><span>Username</span><i class="glyphicon glyphicon-triangle-top"></i></td>
+        <td><span>Password</span><i class="glyphicon glyphicon-triangle-bottom"></i></td>
+        <td><span>First Name</span><i class="glyphicon glyphicon-triangle-bottom"></i></td>
+        <td><span>Last Name</span><i class="glyphicon glyphicon-triangle-bottom"></i></td>
+        <td><span>Email</span><i class="glyphicon glyphicon-triangle-bottom"></i></td>
+        <td><span>Roles</span><i class="glyphicon glyphicon-triangle-bottom"></i></td>
+    </tr>
 
-        </div>
-    </div>
-</div>
+    <tr>
+        <td>&nbsp;</td>
+        <td><input ng-model="user.username" class="form-control" placeholder="username"/></td>
+        <td><input ng-model="user.password" class="form-control" type="password" placeholder="password"/></td>
+        <td><input ng-model="user.firstName" class="form-control" placeholder="first"/></td>
+        <td><input ng-model="user.lastName" class="form-control" placeholder="last"/></td>
+        <td><input ng-model="user.email" class="form-control" type="email" placeholder="email"/></td>
+        <td><input ng-model="user.roles" class="form-control" placeholder="roles"/></td>
+        <td><button ng-click="addUser(user)" class="btn btn-primary">&plus;</button>
+        <td><button ng-click="updateUser(user)" class="btn btn-success">&check;</button>
+    </tr>
+
+    </tr>
+    <tr ng-repeat="user in users track by $index">
+        <td>{{user._id}}</td>
+        <td>{{user.username}}</td>
+        <td>&nbsp;</td>
+        <td>{{user.firstName}}</td>
+        <td>{{user.lastName}}</td>
+        <td>{{user.email}}</td>
+        <td>{{user.roles}}</td>
+        <td><button ng-click="removeUser(user, $index)" class="btn btn-danger">X</button>
+        <td><button ng-click="selectUser(user, $index)" class="btn btn-success">...</button>
+    </tr>
+</table>

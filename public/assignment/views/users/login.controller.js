@@ -7,8 +7,10 @@
         var model = this;
         $rootScope.login = login;
 
-        function login (user) {
-            UserService.findUserByCredentials(user.username, user.password).then(function(userInfo){
+        function login (user)
+        {
+
+            UserService.login(user = {username: user.username, password:user.password}).then(function(userInfo){
                 if (userInfo != null) {
                     $rootScope.user = userInfo.data[0];
                     $location.url("/profile");

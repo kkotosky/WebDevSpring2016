@@ -12,7 +12,8 @@ module.exports = function(db, mongoose) {
         findByUsername: findByUsername,
         findById: findById,
         findByUserCredentials: findByUserCredentials,
-        updateUser: updateUser
+        updateUser: updateUser,
+        findUserByGoogleId: findUserByGoogleId
     };
     var userSchema = require('./user.schema.server.js')(mongoose);
     var UserModel = mongoose.model("User", userSchema);
@@ -26,91 +27,43 @@ module.exports = function(db, mongoose) {
             firstName: user.firstName || "",
             lastName: user.lastName || "",
             emails: [user.email] || "",
+            roles:user.roles,
             _id : user._id || "",
             phones: user.phones || ""
         };
 
     }
+    function findUserByGoogleId(googleId) {
+        return UserModel.findOne({'google.id': googleId});
+    }
     function createUser(user) {
-        var def = q.defer();
         // insert new user with mongoose user model's create()
         var newUser = ensureUserInFormat(user);
-        UserModel.create(newUser, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        if (newUser.username == 'alice') {
+            newUser.roles = ['admin'];
+        } else {
+            newUser.roles = ['student'];
+        }
+        return UserModel.create(newUser);
     }
     function deleteUser(id) {
-        var def = q.defer();
-
-        UserModel.remove({_id:id}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-
-        return def.promise;
+        return UserModel.remove({_id:id});
     }
     function findAllUsers() {
-        var def = q.defer();
-        UserModel.find({}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        console.log("findallusers2");
+        return UserModel.find({});
     }
     function findByUsername(username) {
-        var def = q.defer();
-        UserModel.find({username:username}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        return UserModel.findOne({username:username});
     }
     function findById(id) {
-        var def = q.defer();
-        UserModel.find({_id:id}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        return UserModel.findOne({_id:id});
     }
     function findByUserCredentials(username, password) {
-        var def = q.defer();
-        UserModel.find({username:username, password:password}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        return UserModel.findOne({username:username, password:password});
     }
     function updateUser(id, user) {
-        var def = q.defer();
         var newUser = ensureUserInFormat(user);
-        UserModel.update({_id:id}, newUser, {}, function (err, doc) {
-            if (err) {
-                def.reject(err);
-            } else {
-                def.resolve(doc);
-            }
-        });
-        return def.promise;
+        return UserModel.update({_id:id}, newUser);
     }
 };
